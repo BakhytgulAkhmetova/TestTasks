@@ -1,20 +1,12 @@
 {
-    "userList": [
-      { "id": 1, "login": "sergey@mail.ru", "password": "11111" },
-      { "id": 2, "login": "misha@mail.ru", "password": "22222" },
-      { "id": 3, "login": "kate@bk.ru", "password": "33333" }
-    ],
-    "adminList": [
-        { "id": 1, "login": "admin@mail.ru", "password": "12345" }
-      ],
-    "authorList": [
+    "authors": [
         { "id": 1, "lastName": "Лермонтов" },
         { "id": 2, "lastName": "Пушкин" },
         { "id": 3, "lastName": "Иванов" },
         { "id": 4, "lastName": "Петров" },
         { "id": 5, "lastName": "Сидоров" }
       ],
-    "courseList": [
+    "courses": [
       { "id": 1,
         "name": "Видеокурс 1", 
         "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.",
@@ -24,3 +16,4 @@
      }
     ]
   }
+  
