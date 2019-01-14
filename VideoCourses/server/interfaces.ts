@@ -22,8 +22,8 @@ export interface TimeDuration {
 export interface CourseInterface {
     name: string,
     description: string,
-    date: Date,
-    duration: Duration,
-    authorList: Array<Author>,
+    date: number,
+    duration: number,
+    idsAuthor: Array<number>,
     id?: Guid
 }

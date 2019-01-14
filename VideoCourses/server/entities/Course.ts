@@ -8,16 +8,16 @@ import { Author } from './Author'
 export class Course implements CourseInterface {
     name: string;
     description: string;
-    date: Date;
-    duration: Duration;
-    authorList: Array<Author>;
+    date: number;
+    duration: number;
+    idsAuthor: Array<number>;
     id: Guid;
     constructor (course: CourseInterface) {
         this.name = course.name;
         this.description = course.description;
         this.date = course.date;
         this.duration = course.duration;
-        this.authorList = course.authorList;
+        this.idsAuthor = course.idsAuthor;
         this.id = Guid.create();
     }
 }
