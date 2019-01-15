@@ -1,0 +1,12 @@
+$common-width: 98%;
+$content-height: 740px;
+
+.app {
+    box-sizing: border-box;
+}
+
+.layout__content-login {
+    width: $common-width;
+    height: $content-height;
+    margin: 10px auto;
+}

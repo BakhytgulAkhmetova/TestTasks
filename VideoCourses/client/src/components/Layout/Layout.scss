@@ -1,0 +1,35 @@
+$common-width: 98%;
+$footer-caption-width: 300px;
+
+.layout__header {
+    height: 140px;
+    width: $common-width;
+    margin: 10px auto;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.layout__footer {
+    height: 50px;
+    width: $common-width;
+    margin: 10px auto;
+    border: 1px solid black;
+}
+
+.layout__footer-caption {
+    width: $footer-caption-width;
+    margin: auto;
+}
+
+.layout__header--logo-wrap{
+     width: 100px;
+}
+
+.layout__header--logo {
+    width: 100%;
+}
+
+.layout__header--caption {
+    height: 50px;
+}

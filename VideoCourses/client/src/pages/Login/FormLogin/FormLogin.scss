@@ -1,0 +1,28 @@
+$form-login-width: 400px;
+$form-login-height: 200px;
+
+.form-login {
+    width: $form-login-width;
+    height: $form-login-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form-login__control-log > input{
+    margin:0 20px;
+    height: 22px;
+    width: 60%;
+}
+
+.form-login__control-pas > input{
+    margin:0 20px 0 10px;
+    height: 22px;
+    width: 60%;
+}
+.form-login__button {
+    width: 100px;
+    height: 30px;
+    margin: 0 70px;
+
+}
