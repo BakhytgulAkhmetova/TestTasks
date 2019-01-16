@@ -34,8 +34,8 @@ const mapStateToProps = (state: any): StateProps => ({
 });
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
-    onLogIn: async (loginForm: InterfaceLoginForm) => { 
-       await dispatch(login(loginForm));
+    onLogIn: (loginForm: InterfaceLoginForm) => { 
+        dispatch(login(loginForm));
     }
 });
 

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Layout } from './components/Layout';
 import { ContentLogin } from './pages/Login/ContentLogin';
 import { ContentCourse } from './pages/Course/ContentCourse';
+import { HeaderCourse } from './pages/Course/HeaderCourse';
 import { store } from './store/store';
 
 import './App.scss';
@@ -16,8 +17,20 @@ class App extends Component {
         <div className="app">
           <Router>
               <Switch>
-                <Layout contentStyle='layout__content-login' path='/login' Component={ContentLogin}/>
-                <Layout contentStyle='layout__content-courses' path='/courses' Component={ContentCourse} />
+                <Layout 
+                    contentStyle='layout__content-login' 
+                    path='/login' 
+                    Content={ContentLogin}/>
+                <Layout 
+                    contentStyle='layout__content-courses' 
+                    path='/courses' 
+                    Content={ContentCourse} 
+                    propsHeader={{login: 'userlogin'}}
+                    HeaderParticular={HeaderCourse}/>
+                <Layout 
+                    contentStyle='layout__content-login' 
+                    path='/' 
+                    Content={ContentLogin}/>
               </Switch>
           </Router>
         </div>

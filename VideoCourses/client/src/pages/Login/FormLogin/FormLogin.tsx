@@ -18,14 +18,12 @@ export const FormLogin: React.SFC<OwnProps> = (props) => {
             <div className='form-login__control-log'>
                <label htmlFor='login'>Логин:</label>
                <input id='login' type='text' value={loginForm.login} onChange={handleChangeLogin}/>
-               <span>введите</span>
             </div> 
             <div className='form-login__control-pas'>
                 <label htmlFor='password'>Пароль:</label>
                 <input id='password' type='password' value={loginForm.password} onChange={handleChangePassword}/>
-                <span>введите</span>
             </div>
-            <button className='form-login__button' onClick={handleLogIn}>Войти</button>
+            <button type='button' className='form-login__button' onClick={handleLogIn}>Войти</button>
         </form>
     );
 }

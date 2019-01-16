@@ -1,0 +1,48 @@
+@import '../../../styles//common.scss';
+
+.course-item {
+    @extend %flex-container;
+    flex-wrap: wrap;
+    border: 1px solid black;
+}
+
+.course-item__info {
+    width: 90%;
+}
+
+.course-item__options {
+    width: 10%;
+}
+
+.course-item__options {
+    @extend %flex-container;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.course-item__info {
+    @extend %flex-container;
+    flex-direction: row;
+}
+
+.options__button {
+    width: 90%;
+    height: 40px;
+}
+
+.info__name,
+.info__duration,
+.info__date {
+    width: 30%;
+}
+
+.info__duration,
+.info__date {
+    padding: 25px 0;
+}
+
+.info__name,
+.info__description {
+    padding: 0 10px;
+}
