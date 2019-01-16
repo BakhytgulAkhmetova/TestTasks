@@ -1,5 +1,0 @@
-{
-    "admins": [
-        { "id": 1, "login": "admin@mail.ru", "password": "12345" }
-      ]
-}
