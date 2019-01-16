@@ -7,6 +7,7 @@ import { ContentLogin } from './pages/Login/ContentLogin';
 import { ContentCourse } from './pages/Course/ContentCourse';
 import { ContentCourseAdd } from './pages/CourseAdd/ContentCourseAdd';
 import { HeaderCourse } from './pages/Course/HeaderCourse';
+import { HeaderPrivate } from './components/HeaderPrivate';
 import { store } from './store/store';
 
 import './App.scss';
@@ -25,7 +26,9 @@ class App extends Component {
                 <Layout 
                     contentStyle='layout__content-course-form' 
                     path='/courses/new' 
-                    Content={ContentCourseAdd}/>
+                    Content={ContentCourseAdd}
+                    propsHeader={{login: 'userlogin', handleLogOff: () =>{localStorage.clear()}}}
+                    HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-courses' 
                     path='/courses' 
