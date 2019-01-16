@@ -2,11 +2,14 @@ import { InterfaceLoginForm } from '../interfaces';
 
 export const authenticationFetch = async (loginForm: InterfaceLoginForm) => {
     debugger;
-    const res = await fetch('http://localhost:4000/auth/login', {
+    const response = await fetch('http://localhost:4000/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        cache: 'no-cache',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(loginForm) });
-        console.log(res);
-    return res;
+    const json = response.json();
+    console.log(json);
+    return json;
 }

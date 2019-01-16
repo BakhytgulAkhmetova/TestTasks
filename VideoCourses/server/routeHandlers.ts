@@ -7,6 +7,5 @@ export const loginHandler = async (req, res) => {
     };
     const result = await isAuthenticated(form)? createToken(form): null;
      result? res.status(200).json(result) 
-    :res.status(200).json({ status: 401, message: 'Incorrect login or password' })
-    return result;
+    :res.status(200).json({ status: 401, message: 'Incorrect login or password' });
 }
