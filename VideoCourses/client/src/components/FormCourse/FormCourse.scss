@@ -1,0 +1,92 @@
+@import '../../styles/common.scss';
+
+%form-item-input {
+    margin-left: 20px;
+}
+
+.form-course {
+    width: 60%;
+    margin:auto;
+}
+
+.form-course__name {
+    margin: 30px 0 30px 74px;
+}
+
+.form-course__description {
+    margin: 30px 0 30px 70px;
+    @extend %flex-container;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-course__date {
+    margin: 30px 0 30px 106px;
+}
+
+.form-course__duration {
+    margin: 30px 0;
+}
+
+.form-course__author-list {
+    margin: 30px 0 30px 30px;
+}
+
+.author-list__box {
+    display:inline-block;
+    vertical-align:top;
+    overflow:hidden;
+    border:solid grey 1px;
+    margin-left: 20px;
+}
+
+.author-list__button-group {
+    display:inline-block;
+    margin-left: 20px;
+    width: 40px;
+}
+
+.author-list__button-group button {
+    margin-top: 20px;
+    height: 30px;
+    width: 100%;
+}
+
+.author-list__box select {
+    padding:10px;
+    margin:-5px -20px -5px -5px;
+}
+
+.form-course__button-group {
+    @extend %flex-container;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 168px;
+    margin-left: 160px;
+}
+
+.form-course__button-group button {
+    height: 30px;
+}
+
+.name__input {
+    width: 30%;
+    height: 20px;
+    @extend %form-item-input;
+}
+
+.description__input {
+    width: 70%;
+    height: 60px;
+    @extend %form-item-input;
+}
+.date__input {
+    width: 20%;
+    height: 20px;
+    @extend %form-item-input;
+}
+.duration__input {
+    width: 5%;
+    height: 20px;
+    @extend %form-item-input;
+}

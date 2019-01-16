@@ -5,12 +5,9 @@ $content-height: 740px;
     box-sizing: border-box;
 }
 
-.layout__content-login {
-    width: $common-width;
-    height: $content-height;
-    margin: 10px auto;
-}
-.layout__content-courses {
+.layout__content-login,
+.layout__content-courses,
+.layout__content-course-form {
     width: $common-width;
     height: $content-height;
     margin: 10px auto;

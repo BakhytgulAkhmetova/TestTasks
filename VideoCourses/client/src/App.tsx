@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Layout } from './components/Layout';
 import { ContentLogin } from './pages/Login/ContentLogin';
 import { ContentCourse } from './pages/Course/ContentCourse';
+import { ContentCourseAdd } from './pages/CourseAdd/ContentCourseAdd';
 import { HeaderCourse } from './pages/Course/HeaderCourse';
 import { store } from './store/store';
 
@@ -21,6 +22,10 @@ class App extends Component {
                     contentStyle='layout__content-login' 
                     path='/login' 
                     Content={ContentLogin}/>
+                <Layout 
+                    contentStyle='layout__content-course-form' 
+                    path='/courses/new' 
+                    Content={ContentCourseAdd}/>
                 <Layout 
                     contentStyle='layout__content-courses' 
                     path='/courses' 
