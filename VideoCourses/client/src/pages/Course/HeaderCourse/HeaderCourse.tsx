@@ -17,7 +17,7 @@ export const  HeaderCourse: React.SFC<OwnProps> = (props) => {
             <button className='header-course__button'>Курсы</button>
             <div className='header-course__user-options'>
                 <span>{propsHeader.login}</span>
-                <Link className='user-options__link' to='/'>logOff</Link>
+                <Link onClick={propsHeader.handleLogOff} className='user-options__link' to='/'>logOff</Link>
             </div>
         </div>
     );

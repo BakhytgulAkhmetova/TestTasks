@@ -6,8 +6,6 @@ export const loginHandler = async (req, res) => {
         password: req.body.password
     };
     const result = await isAuthenticated(form)? createToken(form): null;
-    console.log(form);
-    console.log(result);
-     result? res.status(200).json(result) 
+     result? res.status(200).json({token: result}) 
     :res.status(200).json({ status: 401, message: 'Incorrect login or password' });
 }

@@ -3,6 +3,7 @@ import Redux from 'redux';
 import classnames from 'classnames';
 import { compose, withState, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { FormLogin } from '../FormLogin';
 import { InterfaceLoginForm } from '../../../interfaces';
@@ -12,30 +13,23 @@ import './ContentLogin.scss';
 
 interface OwnProps {
     contentStyle: string,
-    isAuthenticated: boolean,
     loginForm: InterfaceLoginForm,
     handleChangeLogin: ChangeEventHandler,
     handleChangePassword: ChangeEventHandler,
     handleLogIn: any,
     onLogIn: Function ,
-    changeLoginForm: Function
-}
-
-interface StateProps {
-    isAuthenticated: boolean
+    changeLoginForm: Function,
+    history: any
 }
      
 interface DispatchProps {
     onLogIn: (loginForm: InterfaceLoginForm) => void
 }
-
-const mapStateToProps = (state: any): StateProps => ({
-    isAuthenticated: state.authentication.isAuthenticated
-});
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     onLogIn: (loginForm: InterfaceLoginForm) => { 
         dispatch(login(loginForm));
+        ownProps.history.push('/courses');
     }
 });
 
@@ -68,7 +62,8 @@ const ContentLogin: React.SFC<OwnProps> = (props) => {
 };
 
 export default compose<OwnProps, {}> (
-    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    connect(null, mapDispatchToProps),
     withState('loginForm', 'changeLoginForm', {
         login: '',
         password: ''

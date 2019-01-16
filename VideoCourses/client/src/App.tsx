@@ -25,7 +25,7 @@ class App extends Component {
                     contentStyle='layout__content-courses' 
                     path='/courses' 
                     Content={ContentCourse} 
-                    propsHeader={{login: 'userlogin'}}
+                    propsHeader={{login: 'userlogin', handleLogOff: () =>{localStorage.clear()}}}
                     HeaderParticular={HeaderCourse}/>
                 <Layout 
                     contentStyle='layout__content-login' 

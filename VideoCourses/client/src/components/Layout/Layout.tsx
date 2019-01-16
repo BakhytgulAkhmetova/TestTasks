@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import { InterfaceLayoutHeader } from '../../interfaces';
 
@@ -9,7 +9,8 @@ import logo from '../../images/logo.svg';
 const Layout = ( props: InterfaceLayoutHeader) => {
   let { Content, HeaderParticular, path, contentStyle, propsHeader } = props;
   return (
-    <Route path={path} render={() => (
+    <Route path={path} render={() => localStorage.getItem('token') || path ==='/login'?
+       (
       <div className="layout">
         <div className="layout__header">
         <div className="layout__header--logo-wrap">
@@ -28,8 +29,14 @@ const Layout = ( props: InterfaceLayoutHeader) => {
          <h2 className='layout__footer-caption'>2014 Copyright</h2>
         </div>
       </div>
-    )} />
-  )
+    ): (
+      (
+        <Redirect
+          to={{
+          pathname: '/login'
+          }}/>)
+    ) } />
+  ) 
 };
 
 export default Layout;

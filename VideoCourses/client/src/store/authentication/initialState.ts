@@ -1,5 +1,4 @@
 interface InitialStateInterface {
-    isAuthenticated: boolean,
     loginForm: {
         login: string,
         password: string
@@ -7,7 +6,6 @@ interface InitialStateInterface {
 }
 
 export const initialState: InitialStateInterface = {
-    isAuthenticated: false,
     loginForm: {
         login: '',
         password: ''
