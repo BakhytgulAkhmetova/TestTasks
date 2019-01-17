@@ -20,11 +20,20 @@ export interface InterfaceFilterForm {
     searchValue: string
 }
 
-export interface InterfaceCourse {
+export interface InterfaceAuthor {
     id: number,
+    lastName: string
+}
+
+export interface InterfaceCourse {
+    id?: number,
     name: string,
     description: string,
     duration: number,
-    date: number
+    date: number,
+    authorList?: {
+       from: Array<InterfaceAuthor>,
+       to: Array<InterfaceAuthor>
+    }
 }
 

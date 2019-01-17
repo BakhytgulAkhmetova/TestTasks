@@ -1,1 +1,1 @@
-export * from './ContentCourseAdd';
+export { default as  ContentCourseAdd } from './ContentCourseAdd';

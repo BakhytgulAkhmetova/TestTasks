@@ -1,5 +1,7 @@
 import React from 'react';
-import { compose, withState, withHandlers } from 'recompose';
+import { compose, withState, withHandlers, lifecycle } from 'recompose';
+
+import { InterfaceCourse } from '../../interfaces';
 
 import './FormCourse.scss';
 
@@ -23,32 +25,19 @@ interface OwnProps {
     changeAuthorList: Function,
     handleReplaceForward: any,
     handleReplaceBack: any,
+    courseForm: InterfaceCourse,
+    handleChangeCourseForm: any
     selectState: InterfaceSelectState,
     changeSelectState: Function,
+    changeCourseForm: Function,
     handleChangeSelectStateFrom: any,
     handleChangeSelectStateTo: any,
 }
 
-const from: Array<InterfaceAuthor> = [{
-        id: 1,
-        lastName: 'Иванов'
-    },
-    {
-        id: 1,
-        lastName: 'Петров'
-    },
-    {
-        id: 1,
-        lastName: 'Сидоров',
-    }];
-const to: Array<InterfaceAuthor> = [{
-        id: 4,
-        lastName: 'Лермонтов'
-    },
-    {
-        id: 5,
-        lastName: 'Петров'
-    }];
+interface AnotherProps {
+    courseForm: InterfaceCourse,
+    handleChangeCourseForm: any
+}
 
 const handlers = {
     handleChangeSelectStateFrom: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
@@ -56,11 +45,13 @@ const handlers = {
         changeSelectState({...selectState, valueFrom: event.currentTarget.value});
 
     },
+
     handleChangeSelectStateTo: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
         const { changeSelectState, selectState } = props;
         changeSelectState({...selectState, valueTo: event.currentTarget.value});
     },
-    handleReplaceForward: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+
+    handleReplaceForward: (props: OwnProps) => () => {
         const { changeAuthorList, authorList, selectState, changeSelectState } = props;
         if(selectState.valueFrom) {
             const indexDeleteFrom = authorList.from.findIndex(el => el.lastName === selectState.valueFrom );
@@ -73,7 +64,7 @@ const handlers = {
         }
     },
 
-    handleReplaceBack: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+    handleReplaceBack: (props: OwnProps) => () => {
         const { changeAuthorList, authorList, selectState, changeSelectState } = props;
         if(selectState.valueTo) {
             const indexDeleteFrom = authorList.to.findIndex(el => el.lastName === selectState.valueTo );
@@ -92,26 +83,47 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
     const { authorList,
         handleReplaceForward,
         handleReplaceBack,
+        courseForm,
         selectState,
+        handleChangeCourseForm,
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
                <label htmlFor='name'>Название:</label>
-               <input className='name__input' id='name' type='text'/>
+               <input 
+               className='name__input'
+                id='name'
+                onChange={handleChangeCourseForm}
+                value={courseForm.name} 
+                type='text'/>
             </div> 
             <div className='form-course__description'>
                 <label htmlFor='description'>Описание:</label>
-                <textarea className='description__input' id='description'></textarea>
+                <textarea 
+                className='description__input'
+                value={courseForm.description}
+                onChange={handleChangeCourseForm}
+                id='description'></textarea>
             </div>
             <div className='form-course__date'>
                <label htmlFor='date'>Дата:</label>
-               <input className='date__input' id='date' type='text'/>
+               <input 
+                className='date__input'
+                id='date'
+                onChange={handleChangeCourseForm}
+                value={courseForm.date}
+                type='text'/>
             </div> 
             <div className='form-course__duration'>
                 <label htmlFor='duration'>Продолжительность:</label>
-                <input className='duration__input' id='duration' type='text'/>
+                <input 
+                className='duration__input'
+                id='duration'
+                onChange={handleChangeCourseForm}
+                value={courseForm.duration}
+                type='text'/>
             </div>
             <div className='form-course__author-list'>
                 <label htmlFor='author-list'>Список авторов:</label>
@@ -150,8 +162,16 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
     );
 }
 
-export default compose<OwnProps, {}>(
-    withState('authorList', 'changeAuthorList', { from, to}),
+export default compose<OwnProps, AnotherProps>(
+    withState('authorList', 'changeAuthorList', { from: [], to: []}),
     withState('selectState', 'changeSelectState', { valueFrom: '', valueTo: ''}),
-    withHandlers(handlers)
+    withHandlers(handlers),
+    lifecycle<OwnProps, {}> ({
+        componentDidUpdate(prevProps) {
+            if(prevProps.courseForm!==this.props.courseForm) {
+            const {  changeAuthorList, courseForm } = this.props;
+            changeAuthorList(courseForm.authorList);
+            }
+        }
+    })
 )(FormCourse);
