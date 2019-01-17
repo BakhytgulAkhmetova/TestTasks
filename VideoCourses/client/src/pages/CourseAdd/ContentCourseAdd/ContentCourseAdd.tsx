@@ -59,13 +59,14 @@ const handlers = {
 
 
 const ContentCourseAdd: React.SFC<OwnProps> = (props) => {
-    const {contentStyle, handleChangeCourseForm, courseForm } = props;
+    const {contentStyle, handleChangeCourseForm, courseForm, changeCourseForm } = props;
     const contentClass = classnames('content-course-new', contentStyle);
     debugger;
     return(
         <div className={contentClass}>
             <FormCourse
             courseForm={courseForm}
+            changeCourseForm={changeCourseForm}
             handleChangeCourseForm={handleChangeCourseForm}
             />
         </div>

@@ -5,23 +5,12 @@ import { InterfaceCourse } from '../../interfaces';
 
 import './FormCourse.scss';
 
-interface InterfaceAuthor {
-    id: number,
-    lastName: string
-}
-
-interface InterfaceAuthorList {
-    from: Array<InterfaceAuthor>,
-    to: Array<InterfaceAuthor>
-}
-
 interface InterfaceSelectState {
     valueFrom: string,
     valueTo: string
 }
 
 interface OwnProps {
-    authorList: InterfaceAuthorList,
     changeAuthorList: Function,
     handleReplaceForward: any,
     handleReplaceBack: any,
@@ -36,6 +25,7 @@ interface OwnProps {
 
 interface AnotherProps {
     courseForm: InterfaceCourse,
+    changeCourseForm: Function,
     handleChangeCourseForm: any
 }
 
@@ -52,27 +42,27 @@ const handlers = {
     },
 
     handleReplaceForward: (props: OwnProps) => () => {
-        const { changeAuthorList, authorList, selectState, changeSelectState } = props;
+        const {  changeCourseForm, selectState, changeSelectState, courseForm } = props;
         if(selectState.valueFrom) {
-            const indexDeleteFrom = authorList.from.findIndex(el => el.lastName === selectState.valueFrom );
-            const arrFrom = [...authorList.from ];
-                let arrTo = [ ...authorList.to ];
+            const indexDeleteFrom = courseForm.authorList.from.findIndex(el => el.lastName === selectState.valueFrom );
+            const arrFrom = [...courseForm.authorList.from ];
+                let arrTo = [ ...courseForm.authorList.to ];
                 arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
                 arrFrom.splice(indexDeleteFrom, 1);
-            changeAuthorList({ from: arrFrom, to: arrTo });
+            changeCourseForm({ ...courseForm, authorList: { from: arrFrom, to: arrTo }});
             changeSelectState({...selectState, valueFrom: ""});
         }
     },
 
     handleReplaceBack: (props: OwnProps) => () => {
-        const { changeAuthorList, authorList, selectState, changeSelectState } = props;
+        const { changeCourseForm, selectState, changeSelectState, courseForm } = props;
         if(selectState.valueTo) {
-            const indexDeleteFrom = authorList.to.findIndex(el => el.lastName === selectState.valueTo );
-            const arrFrom = [...authorList.to ];
-                let arrTo = [ ...authorList.from ];
+            const indexDeleteFrom = courseForm.authorList.to.findIndex(el => el.lastName === selectState.valueTo );
+            const arrFrom = [...courseForm.authorList.to ];
+                let arrTo = [ ...courseForm.authorList.from ];
                 arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
                 arrFrom.splice(indexDeleteFrom, 1);
-            changeAuthorList({ from: arrTo, to: arrFrom });
+            changeCourseForm({ ...courseForm, authorList: { from: arrTo, to: arrFrom }});
             changeSelectState({...selectState, valueTo: ""});
         }
 
@@ -80,7 +70,7 @@ const handlers = {
 } 
 
 const FormCourse: React.SFC<OwnProps> = (props) => {
-    const { authorList,
+    const { 
         handleReplaceForward,
         handleReplaceBack,
         courseForm,
@@ -131,7 +121,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     <select value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
                     <option value="" disabled>None</option>
                     {
-                        authorList.from.map(author => (<option
+                            courseForm.authorList.from.map(author => (<option
                             key={author.id + author.lastName} 
                             id={author.id + author.lastName} 
                             value={author.lastName}>{author.lastName}</option>))
@@ -146,7 +136,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     <select value={selectState.valueTo} onChange={handleChangeSelectStateTo} size={6}>
                     <option value="" disabled>None</option>
                     {
-                        authorList.to.map(author => (<option
+                        courseForm.authorList.to.map(author => (<option
                             key={author.id + author.lastName} 
                             id={author.id + author.lastName} 
                             value={author.lastName}>{author.lastName}</option>))
@@ -163,15 +153,6 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
 }
 
 export default compose<OwnProps, AnotherProps>(
-    withState('authorList', 'changeAuthorList', { from: [], to: []}),
     withState('selectState', 'changeSelectState', { valueFrom: '', valueTo: ''}),
-    withHandlers(handlers),
-    lifecycle<OwnProps, {}> ({
-        componentDidUpdate(prevProps) {
-            if(prevProps.courseForm!==this.props.courseForm) {
-            const {  changeAuthorList, courseForm } = this.props;
-            changeAuthorList(courseForm.authorList);
-            }
-        }
-    })
+    withHandlers(handlers)
 )(FormCourse);
