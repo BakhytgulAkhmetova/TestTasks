@@ -1,14 +1,19 @@
 $common-width: 98%;
-$content-height: 740px;
+$content-height: 734px;
 
 .app {
     box-sizing: border-box;
 }
 
 .layout__content-login,
-.layout__content-courses,
-.layout__content-course-form {
+.layout__content-courses, {
     width: $common-width;
     height: $content-height;
     margin: 10px auto;
+}
+
+.layout__content-course-form {
+    margin: 100px auto;
+    width: $common-width;
+    height: 555px;
 }

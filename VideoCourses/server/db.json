@@ -23,7 +23,7 @@
   ],
   "courses": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Видеокурс 1",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti. sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti",
       "date": "",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "id": "3",
+      "id": 5,
       "name": "Видеокурс 1",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.",
       "date": "",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 6,
       "name": "Видеокурс 1",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.",
       "date": "",

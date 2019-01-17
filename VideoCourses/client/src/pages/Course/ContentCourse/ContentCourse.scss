@@ -7,13 +7,16 @@
 }
 .courses__list{
     margin-top: 20px;
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: unset;
 }
 .content-courses__filter {
     width: 80%;
     height: 40px;;
 }
 .content-courses__course-item {
-    width: 100%;
+    width: 99%;
     margin: 10px 0;
 }
 

@@ -3,6 +3,7 @@ import Redux from 'redux';
 import classnames from 'classnames';
 import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { InterfaceCourse } from '../../../interfaces';
 import { FormFilter } from '../FormFilter';
@@ -14,7 +15,8 @@ import './ContentCourse.scss';
 interface OwnProps {
     contentStyle: string,
     courseList: Array<InterfaceCourse>,
-    getCourseList: Function
+    getCourseList: Function,
+    history: any
 }
 
 interface StateProps {
@@ -36,13 +38,13 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): 
 });
 
 const ContentCourse: React.SFC<OwnProps> = (props) => {
-    const { contentStyle, courseList } = props;
+    const { contentStyle, courseList, history } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
         <div className={contentClass}>
             <div className='courses__options'>
                 <FormFilter filterSizeStyle='content-courses__filter'/>
-                <button className='content-courses__button'>Добавить курс</button>
+                <button className='content-courses__button' onClick={ () => (history.push('/courses/new') ) } >Добавить курс</button>
             </div>
             <div className='courses__list'>
             {
@@ -60,6 +62,7 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
 };
 
 export default compose< OwnProps, {}>(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
