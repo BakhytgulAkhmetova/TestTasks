@@ -5,17 +5,20 @@ import { Link } from 'react-router-dom';
 import './Breadcrumb.scss';
 
 interface OwnProps {
-
+    pathList: Array<string>
 }
 
 export const  Breadcrumb: React.SFC<OwnProps> = (props) => {
-    //const headerClass = classnames('header-course', headerStyle);
+    const { pathList } = props;
     return(
         <ul className ='breadcrumb'>
-           <li><a href="#">Home</a></li>
-           <li><a href="#">Pictures</a></li>
-           <li><a href="#">Summer 15</a></li>
-           <li>Italy</li>
+        {
+            pathList.map((p, index) => {
+               return index!==pathList.length - 1?
+                <li key={p + index}><Link to='/courses'>{p}</Link></li>: null;
+            })
+        }    
+        <li>{pathList[pathList.length - 1]}</li>    
         </ul>
     );
 }

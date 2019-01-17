@@ -16,10 +16,13 @@ export const  HeaderPrivate: React.SFC<OwnProps> = (props) => {
     const headerClass = classnames('header-course', headerStyle);
     return(
         <div className={headerClass}>
-            <Breadcrumb/>
+            <Breadcrumb pathList={propsHeader.pathList}/>
             <div className='header-course__user-options'>
                 <span>{propsHeader.login}</span>
-                <Link onClick={propsHeader.handleLogOff} className='user-options__link' to='/'>logOff</Link>
+                <Link 
+                    onClick={propsHeader.handleLogOff} 
+                    className='user-options__link' 
+                    to='/'>logOff</Link>
             </div>
         </div>
     );

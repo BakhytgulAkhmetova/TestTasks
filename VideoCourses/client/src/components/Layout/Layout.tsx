@@ -19,7 +19,7 @@ const Layout = ( props: InterfaceLayoutHeader) => {
         <h1 className="layout__header--caption">Videocourses</h1>
         {
               HeaderParticular?
-              <HeaderParticular  
+              <HeaderParticular 
               propsHeader = {propsHeader}
               headerStyle='layout__header-particular'/>: null
         }

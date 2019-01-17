@@ -10,7 +10,7 @@ export  const login = (loginForm: InterfaceLoginForm) => {
           const json = await authenticationFetch(loginForm);
           if(json['token']) {
               localStorage.setItem('token', json['token']);
-              dispatch(loginSuccess());
+              dispatch(loginSuccess(loginForm.login));
           }
     };
 };
