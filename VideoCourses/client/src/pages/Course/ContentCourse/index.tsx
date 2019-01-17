@@ -1,1 +1,1 @@
-export * from './ContentCourse';
+export { default as ContentCourse } from './ContentCourse';

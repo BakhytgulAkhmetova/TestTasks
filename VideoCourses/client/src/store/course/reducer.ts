@@ -1,17 +1,20 @@
 import { InterfaceAction } from '../../interfaces';
 import * as types from './actions';
 
-const authentication = (state = { isLoading: false }, action: InterfaceAction) => {
+import { default as initialState } from './initialState';
+
+const course = (state = initialState, action: InterfaceAction) => {
     switch (action.type) {
-        case types.LOG_IN_REQUEST:
+        case types.GET_COURSE_LIST_REQUEST:
             return {
                 ...state,
                 isLoading: !state.isLoading
             };
 
-        case types.LOG_IN_SUCCESS:
+        case types.GET_COURSE_LIST_SUCCESS:
             return {
                 ...state,
+                courseList: action.payload,
                 isLoading: !state.isLoading
             };
         default:
@@ -19,4 +22,4 @@ const authentication = (state = { isLoading: false }, action: InterfaceAction) =
     }
 };
 
-export default authentication;
+export default course;

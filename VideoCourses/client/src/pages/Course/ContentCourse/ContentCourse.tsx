@@ -1,22 +1,42 @@
 import React from 'react';
+import Redux from 'redux';
 import classnames from 'classnames';
+import { compose, lifecycle } from 'recompose';
+import { connect } from 'react-redux';
 
 import { InterfaceCourse } from '../../../interfaces';
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
+import { getCourseList } from '../../../store/course/asyncActions';
 
 import './ContentCourse.scss';
 
-const course: InterfaceCourse  = {
-    id: 1,
-    name: 'Видеокурс 1',
-    description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.',
-    duration: 43,
-    date: 16
+interface OwnProps {
+    contentStyle: string,
+    courseList: Array<InterfaceCourse>,
+    getCourseList: Function
 }
 
-export const ContentCourse = (props: {contentStyle: string}) => {
-    const {contentStyle } = props;
+interface StateProps {
+    courseList: Array<InterfaceCourse>
+}
+
+interface DispatchProps {
+    getCourseList: () => void
+}
+
+const mapStateToProps = (state: any): StateProps => ({
+    courseList: state.course.courseList
+});
+   
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
+    getCourseList: () => {
+        dispatch(getCourseList());
+    }
+});
+
+const ContentCourse: React.SFC<OwnProps> = (props) => {
+    const { contentStyle, courseList } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
         <div className={contentClass}>
@@ -25,10 +45,26 @@ export const ContentCourse = (props: {contentStyle: string}) => {
                 <button className='content-courses__button'>Добавить курс</button>
             </div>
             <div className='courses__list'>
-                <CourseItem 
-                courseItemStyle='content-courses__course-item'
-                course = {course}/>
+            {
+                courseList.map(course => (
+                    <CourseItem 
+                    key={course.id + course.name}
+                    courseItemStyle='content-courses__course-item'
+                    course = {course}/>
+
+                ))
+            }
             </div>
         </div>
     );
 };
+
+export default compose< OwnProps, {}>(
+    connect(mapStateToProps, mapDispatchToProps),
+    lifecycle<OwnProps, {}> ({
+        componentDidMount() {
+            const { getCourseList, courseList } = this.props;
+            getCourseList();
+        }
+    })
+)(ContentCourse);

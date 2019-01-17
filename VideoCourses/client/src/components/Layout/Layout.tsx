@@ -7,7 +7,6 @@ import './Layout.scss';
 import logo from '../../images/logo.svg';
 
 const Layout = ( props: InterfaceLayoutHeader) => {
-  debugger;
   let { Content, HeaderParticular, path, contentStyle, propsHeader } = props;
   return (
     <Route path={path} render={() => localStorage.getItem('token') || path ==='/login'?

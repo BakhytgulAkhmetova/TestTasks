@@ -10,7 +10,6 @@ import { InterfaceLoginForm } from '../../../interfaces';
 import { login } from '../../../store/authentication/asyncActions';
 
 import './ContentLogin.scss';
-import { async } from 'q';
 
 interface OwnProps {
     contentStyle: string,

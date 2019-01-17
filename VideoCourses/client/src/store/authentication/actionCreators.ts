@@ -1,9 +1,9 @@
 import * as actions from './actions';
 
-export const loginSuccess = () => {
-    return { type: actions.LOG_IN_SUCCESS };
+export const loginRequest = () => {
+    return { type: actions.LOG_IN_REQUEST };
 };
 
-export const logoff = () => {
-    return { type: actions.LOG_OFF };
+export const loginSuccess = () => {
+    return { type: actions.LOG_IN_SUCCESS };
 };
