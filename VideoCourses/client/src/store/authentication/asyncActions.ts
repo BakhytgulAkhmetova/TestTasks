@@ -6,6 +6,7 @@ import { authenticationFetch } from '../../api/authentication';
 
 export  const login = (loginForm: InterfaceLoginForm) => {
     return async (dispatch: Redux.Dispatch<any>) => {
+          debugger;
           const json = await authenticationFetch(loginForm);
           json['token']? localStorage.setItem('token', json['token']): null;
           console.log(localStorage);

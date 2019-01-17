@@ -10,6 +10,7 @@ import { InterfaceLoginForm } from '../../../interfaces';
 import { login } from '../../../store/authentication/asyncActions';
 
 import './ContentLogin.scss';
+import { async } from 'q';
 
 interface OwnProps {
     contentStyle: string,
@@ -27,8 +28,8 @@ interface DispatchProps {
 }
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
-    onLogIn: (loginForm: InterfaceLoginForm) => { 
-        dispatch(login(loginForm));
+    onLogIn: async (loginForm: InterfaceLoginForm) => { 
+        await dispatch(login(loginForm));
         ownProps.history.push('/courses');
     }
 });
