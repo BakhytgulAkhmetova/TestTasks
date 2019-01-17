@@ -1,13 +1,100 @@
 import React from 'react';
+import { compose, withState, withHandlers } from 'recompose';
 
 import './FormCourse.scss';
 
-interface OwnProps {
-
+interface InterfaceAuthor {
+    id: number,
+    lastName: string
 }
 
-export const FormCourse: React.SFC<OwnProps> = (props) => {
+interface InterfaceAuthorList {
+    from: Array<InterfaceAuthor>,
+    to: Array<InterfaceAuthor>
+}
 
+interface InterfaceSelectState {
+    valueFrom: string,
+    valueTo: string
+}
+
+interface OwnProps {
+    authorList: InterfaceAuthorList,
+    changeAuthorList: Function,
+    handleReplaceForward: any,
+    handleReplaceBack: any,
+    selectState: InterfaceSelectState,
+    changeSelectState: Function,
+    handleChangeSelectStateFrom: any,
+    handleChangeSelectStateTo: any,
+}
+
+const from: Array<InterfaceAuthor> = [{
+        id: 1,
+        lastName: 'Иванов'
+    },
+    {
+        id: 1,
+        lastName: 'Петров'
+    },
+    {
+        id: 1,
+        lastName: 'Сидоров',
+    }];
+const to: Array<InterfaceAuthor> = [{
+        id: 4,
+        lastName: 'Лермонтов'
+    },
+    {
+        id: 5,
+        lastName: 'Петров'
+    }];
+
+const handlers = {
+    handleChangeSelectStateFrom: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+        const { changeSelectState, selectState } = props;
+        changeSelectState({...selectState, valueFrom: event.currentTarget.value});
+
+    },
+    handleChangeSelectStateTo: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+        const { changeSelectState, selectState } = props;
+        changeSelectState({...selectState, valueTo: event.currentTarget.value});
+    },
+    handleReplaceForward: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+        const { changeAuthorList, authorList, selectState, changeSelectState } = props;
+        if(selectState.valueFrom) {
+            const indexDeleteFrom = authorList.from.findIndex(el => el.lastName === selectState.valueFrom );
+            const arrFrom = [...authorList.from ];
+                let arrTo = [ ...authorList.to ];
+                arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
+                arrFrom.splice(indexDeleteFrom, 1);
+            changeAuthorList({ from: arrFrom, to: arrTo });
+            changeSelectState({...selectState, valueFrom: ""});
+        }
+    },
+
+    handleReplaceBack: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
+        const { changeAuthorList, authorList, selectState, changeSelectState } = props;
+        if(selectState.valueTo) {
+            const indexDeleteFrom = authorList.to.findIndex(el => el.lastName === selectState.valueTo );
+            const arrFrom = [...authorList.to ];
+                let arrTo = [ ...authorList.from ];
+                arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
+                arrFrom.splice(indexDeleteFrom, 1);
+            changeAuthorList({ from: arrTo, to: arrFrom });
+            changeSelectState({...selectState, valueTo: ""});
+        }
+
+    }
+} 
+
+const FormCourse: React.SFC<OwnProps> = (props) => {
+    const { authorList,
+        handleReplaceForward,
+        handleReplaceBack,
+        selectState,
+        handleChangeSelectStateFrom,
+        handleChangeSelectStateTo } = props;
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
@@ -29,20 +116,29 @@ export const FormCourse: React.SFC<OwnProps> = (props) => {
             <div className='form-course__author-list'>
                 <label htmlFor='author-list'>Список авторов:</label>
                 <div className='author-list__box'>
-                    <select multiple size={6}>
-                        <option value="Иванов">Иванов</option>
-                        <option value="Петров">Петров</option>
-                        <option value="Сидоров">Сидоров</option>
+                    <select value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
+                    <option value="" disabled>None</option>
+                    {
+                        authorList.from.map(author => (<option
+                            key={author.id + author.lastName} 
+                            id={author.id + author.lastName} 
+                            value={author.lastName}>{author.lastName}</option>))
+                    }
                     </select>
                 </div>
                 <div className='author-list__button-group'>
-                    <button type='button'>&#x25B6;</button>
-                    <button type='button'>&#x25C0;</button>
+                    <button type='button' onClick={handleReplaceForward}>&#x25B6;</button>
+                    <button type='button' onClick={handleReplaceBack}>&#x25C0;</button>
                 </div>
                 <div className='author-list__box'>
-                    <select size={6}>
-                        <option value="Лермонтов">Лермонтов</option>
-                        <option value="Петров">Петров</option>
+                    <select value={selectState.valueTo} onChange={handleChangeSelectStateTo} size={6}>
+                    <option value="" disabled>None</option>
+                    {
+                        authorList.to.map(author => (<option
+                            key={author.id + author.lastName} 
+                            id={author.id + author.lastName} 
+                            value={author.lastName}>{author.lastName}</option>))
+                    }
                     </select>
                 </div>
             </div>
@@ -53,3 +149,9 @@ export const FormCourse: React.SFC<OwnProps> = (props) => {
         </form>
     );
 }
+
+export default compose<OwnProps, {}>(
+    withState('authorList', 'changeAuthorList', { from, to}),
+    withState('selectState', 'changeSelectState', { valueFrom: '', valueTo: ''}),
+    withHandlers(handlers)
+)(FormCourse);

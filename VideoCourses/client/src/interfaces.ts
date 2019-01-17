@@ -27,3 +27,4 @@ export interface InterfaceCourse {
     duration: number,
     date: number
 }
+

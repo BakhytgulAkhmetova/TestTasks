@@ -66,7 +66,7 @@ export default compose< OwnProps, {}>(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
-            const { getCourseList, courseList } = this.props;
+            const { getCourseList } = this.props;
             getCourseList();
         }
     })

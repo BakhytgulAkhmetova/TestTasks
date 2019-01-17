@@ -26,7 +26,7 @@ const Layout = ( props: InterfaceLayoutHeader) => {
         </div>
           <Content contentStyle={contentStyle} />
         <div className="layout__footer">
-         <h2 className='layout__footer-caption'>2014 Copyright</h2>
+         <h2 className='layout__footer-caption'>Copyright 2019</h2>
         </div>
       </div>
     ): (
