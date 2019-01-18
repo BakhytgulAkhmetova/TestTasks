@@ -26,7 +26,7 @@ export interface InterfaceAuthor {
 }
 
 export interface InterfaceCourse {
-    id?: number,
+    id: any,
     name: string,
     description: string,
     duration: string,

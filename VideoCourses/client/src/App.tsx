@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, EventHandler } from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -6,6 +6,7 @@ import { Layout } from './components/Layout';
 import { ContentLogin } from './pages/Login/ContentLogin';
 import { ContentCourse } from './pages/Course/ContentCourse';
 import { ContentCourseAdd } from './pages/CourseAdd/ContentCourseAdd';
+import { ContentCourseEdit } from './pages/CourseEdit/ContentCourseEdit';
 import { HeaderPrivate } from './components/HeaderPrivate';
 import { store } from './store/store';
 
@@ -13,7 +14,6 @@ import './App.scss';
 
 class App extends React.Component<{}, {}> {
   render() {
-    console.log(localStorage);
     return (
       <Provider store={store}>
         <div className="app">
@@ -30,6 +30,14 @@ class App extends React.Component<{}, {}> {
                     propsHeader={{login: localStorage.getItem('login'),
                      handleLogOff: () =>{localStorage.clear()},
                       pathList:['Курсы', 'Новый']}}
+                    HeaderParticular={HeaderPrivate}/>
+                <Layout 
+                    contentStyle='layout__content-course-form' 
+                    path='/courses/:id' 
+                    Content={ContentCourseEdit}
+                    propsHeader={{login: localStorage.getItem('login'),
+                    handleLogOff: () =>{localStorage.clear()},
+                    pathList:['Курсы', 'id']}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-courses' 

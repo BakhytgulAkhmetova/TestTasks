@@ -12,6 +12,17 @@ export const getCourseListSuccess = (payload: Array<InterfaceCourse>) => {
      };
 };
 
+export const getCourseByIdRequest = () => {
+    return { type: actions.GET_COURSE_BY_ID_REQUEST };
+};
+
+export const getCourseByIdSuccess = (payload: InterfaceCourse) => {
+    return { 
+        type: actions.GET_COURSE_BY_ID_SUCCESS,
+        payload
+     };
+};
+
 export const addCourseRequest = () => {
     return { type: actions.ADD_COURSE_REQUEST };
 };

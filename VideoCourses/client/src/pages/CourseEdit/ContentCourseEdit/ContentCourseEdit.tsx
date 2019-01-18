@@ -15,8 +15,9 @@ import './ContentCourseEdit.scss';
 
 interface OwnProps {
     contentStyle: string,
+    courseForEdit: InterfaceCourse,
     getAuthors: Function,
-    addCourse: Function,
+    getCourseById: Function,
     changeCourseForm: Function,
     courseForm: InterfaceCourse,
     handleChangeCourseForm: any,
@@ -27,12 +28,12 @@ interface OwnProps {
 }
 
 interface StateProps {
-    authorList: Array<InterfaceAuthor>
+    authorList: Array<InterfaceAuthor>,
+    courseForEdit: InterfaceCourse
 }
 
 interface DispatchProps {
     getAuthors: () => void,
-    addCourse: (course: InterfaceCourse) => void
 }
 
 const courseFormInitial: InterfaceCourse = {
@@ -48,15 +49,13 @@ const courseFormInitial: InterfaceCourse = {
 }
 
 const mapStateToProps = (state: any): StateProps => ({
-    authorList: state.author.authorList
+    authorList: state.author.authorList,
+    courseForEdit: state.course.courseForm
 });
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     getAuthors: () => {
         dispatch(getAuthorList());
-    },
-    addCourse: (course: InterfaceCourse) => {
-        dispatch(addCourse(course));
     }
 });
 
@@ -66,8 +65,7 @@ const handlers = {
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
     },
     handleSaveCourse: (props: OwnProps) => async () => {
-        const { history, addCourse, courseForm } = props;
-        await addCourse(courseForm);
+        const { history, courseForm } = props;
         history.push('./courses');
     },
     handleCancel: (props: OwnProps) => () => {
@@ -104,15 +102,15 @@ export default compose<OwnProps, {}>(
     withState('courseForm', 'changeCourseForm', courseFormInitial),
     withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
-        componentDidUpdate(prevProps) {
-            if(prevProps.authorList!==this.props.authorList) {
-            const { authorList, changeCourseForm, courseForm } = this.props;
-            changeCourseForm({ ...courseForm, authorList:{ from: authorList, to: []} });
-            }
-        },
+        // componentDidUpdate(prevProps) {
+        //     if(prevProps.authorList!==this.props.authorList) {
+        //     const { authorList, changeCourseForm, courseForm } = this.props;
+        //     changeCourseForm({ ...courseForm, authorList:{ from: authorList, to: []} });
+        //     }
+        // },
         componentDidMount() {
-            const { getAuthors } = this.props;
-            getAuthors();
+            const { changeCourseForm, courseForEdit } = this.props;
+            changeCourseForm(courseForEdit);
         }
     })
 )(ContentCourseEdit);

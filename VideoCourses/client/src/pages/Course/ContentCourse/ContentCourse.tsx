@@ -1,11 +1,12 @@
 import React from 'react';
 import Redux from 'redux';
 import classnames from 'classnames';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
+import { getCourseById } from '../../../store/course/asyncActions';
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
 import { getAuthorList } from '../../../store/author/asyncActions';
@@ -14,40 +15,62 @@ import { getCourseList } from '../../../store/course/asyncActions';
 import './ContentCourse.scss';
 
 interface OwnProps {
+    cour: any,
     contentStyle: string,
     courseList: Array<InterfaceCourse>,
     authorList: Array<InterfaceAuthor>,
     getCourseList: Function,
+    getCourseById: Function,
     getAuthors: Function,
+    handleOpenEditPage: any,
     history: any
 }
 
 interface StateProps {
     courseList: Array<InterfaceCourse>,
-    authorList: Array<InterfaceAuthor>
+    authorList: Array<InterfaceAuthor>,
+    cour: any
 }
 
 interface DispatchProps {
     getCourseList: () => void,
+    getCourseById: (id:any) => void,
     getAuthors: () => void,
 }
 
 const mapStateToProps = (state: any): StateProps => ({
     courseList: state.course.courseList,
-    authorList: state.author.authorList
+    authorList: state.author.authorList,
+    cour:state.course.courseForm
 });
    
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
     getCourseList: () => {
         dispatch(getCourseList());
+    },
+    getCourseById: async (id: any) => {
+       await dispatch(getCourseById(id));
     },
     getAuthors: () => {
         dispatch(getAuthorList());
     },
 });
 
+const handlers = {
+    handleOpenEditPage: (props: OwnProps) => (event: React.MouseEvent<HTMLElement>) => {
+        const { history, getCourseById, cour }  = props;
+        const id = event.currentTarget.id;
+        const path = '/courses/' + id;
+        getCourseById(id).then(() => {
+            debugger;
+            console.log(cour);
+            history.push(path);
+        });
+    }
+}
+
 const ContentCourse: React.SFC<OwnProps> = (props) => {
-    const { contentStyle, courseList, history, authorList } = props;
+    const { contentStyle, courseList, history, authorList, handleOpenEditPage } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
         <div className={contentClass}>
@@ -65,6 +88,7 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
                             return a;
                         }
                     })}
+                    handleOpenEditPage={handleOpenEditPage}
                     key={course.id + course.name}
                     courseItemStyle='content-courses__course-item'
                     course = {course}/>
@@ -85,5 +109,6 @@ export default compose< OwnProps, {}>(
             getCourseList();
             getAuthors();
         }
-    })
+    }),
+    withHandlers(handlers)
 )(ContentCourse);

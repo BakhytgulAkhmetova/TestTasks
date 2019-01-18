@@ -1,18 +1,25 @@
 import Redux from 'redux';
 import uniqid from 'uniqid';
 
-import { getCourseListFetch, addCourseFetch } from '../../api/course';
+import { getCourseListFetch, addCourseFetch, getCourseByIdFetch } from '../../api/course';
 import { InterfaceCourse } from '../../interfaces';
-import { getCourseListRequest,
-        getCourseListSuccess,
-        addCourseRequest,
-        addCourseSuccess } from '../course/actionCreators';
+import { getCourseListRequest, getCourseListSuccess,
+         getCourseByIdRequest, getCourseByIdSuccess,
+        addCourseRequest, addCourseSuccess } from '../course/actionCreators';
 
 export  const getCourseList = () => {
     return async (dispatch: Redux.Dispatch<any>) => {
           dispatch(getCourseListRequest());
           const result = await getCourseListFetch();
           dispatch(getCourseListSuccess(result));
+    };
+};
+
+export  const getCourseById = (id: any) => {
+    return async (dispatch: Redux.Dispatch<any>) => {
+          dispatch(getCourseByIdRequest());
+          const result = await getCourseByIdFetch(id);
+          dispatch(getCourseByIdSuccess(result));
     };
 };
 

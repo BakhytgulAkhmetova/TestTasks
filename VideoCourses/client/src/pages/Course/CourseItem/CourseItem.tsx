@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { EventHandler } from 'react';
 import classnames from 'classnames';
 
 import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
@@ -9,11 +9,12 @@ import './CourseItem.scss';
 interface OwnProps {
     course: InterfaceCourse,
     courseItemStyle: string,
-    authors: Array<any>
+    authors: Array<any>,
+    handleOpenEditPage: any
 }
 
 export const CourseItem: React.SFC<OwnProps> = (props) => {
-    const { course, courseItemStyle, authors } = props;
+    const { course, courseItemStyle, authors, handleOpenEditPage } = props;
     const courseClass = classnames('course-item', courseItemStyle);
     const duration = filterDuration(parseInt(course.duration));
     return(
@@ -30,8 +31,12 @@ export const CourseItem: React.SFC<OwnProps> = (props) => {
              </p>
             </div>
             <div className='course-item__options'>
-               <button className='options__button'>Редактировать</button>
-               <button className='options__button'>Удалить</button>
+               <button type='button'
+                       id={course.id}
+                       onClick={handleOpenEditPage}
+                       className='options__button'>Редактировать</button>
+               <button type='button'
+                       className='options__button'>Удалить</button>
             </div>
         </div>
     );

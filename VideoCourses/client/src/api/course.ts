@@ -12,6 +12,18 @@ export const getCourseListFetch = async () => {
     return json;
 }
 
+export const getCourseByIdFetch = async (id: any) => {
+    const response = await fetch( baseUrl.concat('/courses/' + id),{
+        method: 'GET',
+        headers: {
+            'pragma': 'no-cache',
+            'cache-control': 'no-cache'
+        },
+      });
+    const json = response.json();
+    return json;
+}
+
 export const addCourseFetch = async (course: any) => {
     const response = await fetch( baseUrl.concat('/courses'), {
         method: 'POST',

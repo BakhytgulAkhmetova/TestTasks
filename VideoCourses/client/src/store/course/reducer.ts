@@ -19,6 +19,22 @@ const course = (state = initialState, action: InterfaceAction) => {
                 }),
                 isLoading: !state.isLoading
             };
+        case types.GET_COURSE_BY_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: !state.isLoading
+            };
+
+        case types.GET_COURSE_BY_ID_SUCCESS:
+        debugger;
+            return {
+                ...state,
+                courseForm: {
+                    ...action.payload,
+                    authorList: { from: [], to: action.payload.idsAuthor }
+                },
+                isLoading: !state.isLoading
+            };
         case types.ADD_COURSE_REQUEST:
             return {
                 ...state,
