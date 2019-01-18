@@ -15,7 +15,6 @@ import { getCourseList } from '../../../store/course/asyncActions';
 import './ContentCourse.scss';
 
 interface OwnProps {
-    cour: any,
     contentStyle: string,
     courseList: Array<InterfaceCourse>,
     authorList: Array<InterfaceAuthor>,
@@ -57,15 +56,12 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
 });
 
 const handlers = {
-    handleOpenEditPage: (props: OwnProps) => (event: React.MouseEvent<HTMLElement>) => {
-        const { history, getCourseById, cour }  = props;
+    handleOpenEditPage: (props: OwnProps) => async (event: React.MouseEvent<HTMLElement>) => {
+        const { history, getCourseById }  = props;
         const id = event.currentTarget.id;
         const path = '/courses/' + id;
-        getCourseById(id).then(() => {
-            debugger;
-            console.log(cour);
-            history.push(path);
-        });
+        await getCourseById(id);
+        history.push(path)
     }
 }
 

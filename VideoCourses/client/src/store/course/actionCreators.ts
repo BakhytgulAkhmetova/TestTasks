@@ -33,3 +33,14 @@ export const addCourseSuccess = (payload: any) => {
         payload
      };
 };
+
+export const editCourseRequest = () => {
+    return { type: actions.EDIT_COURSE_REQUEST };
+};
+
+export const editCourseSuccess = (payload: any) => {
+    return { 
+        type: actions.EDIT_COURSE_SUCCESS,
+        payload
+     };
+};

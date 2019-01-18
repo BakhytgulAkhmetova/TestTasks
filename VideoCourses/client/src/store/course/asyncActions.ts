@@ -1,10 +1,11 @@
 import Redux from 'redux';
 import uniqid from 'uniqid';
 
-import { getCourseListFetch, addCourseFetch, getCourseByIdFetch } from '../../api/course';
+import { getCourseListFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch } from '../../api/course';
 import { InterfaceCourse } from '../../interfaces';
 import { getCourseListRequest, getCourseListSuccess,
          getCourseByIdRequest, getCourseByIdSuccess,
+         editCourseRequest, editCourseSuccess,
         addCourseRequest, addCourseSuccess } from '../course/actionCreators';
 
 export  const getCourseList = () => {
@@ -36,5 +37,19 @@ export  const addCourse = (course: InterfaceCourse ) => {
           }
           await addCourseFetch(courseAdd);
           dispatch(addCourseSuccess(courseAdd));
+    };
+};
+export  const editCourse = (id: any, course: InterfaceCourse ) => {
+    return async (dispatch: Redux.Dispatch<any>) => {
+          dispatch(editCourseRequest());
+          const courseEdit = {
+            name: course.name,
+            description: course.description,
+            date: course.date,
+            duration: course.duration,
+            idsAuthor: course.authorList.to.map(a => a.id)
+          }
+          await editCourseFetch(id, courseEdit);
+          dispatch(editCourseSuccess(course));
     };
 };

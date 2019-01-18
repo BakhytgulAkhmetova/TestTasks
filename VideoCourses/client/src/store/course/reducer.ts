@@ -47,6 +47,21 @@ const course = (state = initialState, action: InterfaceAction) => {
                 courseList: (state.courseList as any[]).concat([action.payload]),
                 isLoading: !state.isLoading
             };
+        case types.EDIT_COURSE_REQUEST:
+            return {
+                ...state,
+                isLoading: !state.isLoading
+            };
+
+        case types.EDIT_COURSE_SUCCESS:
+        const arrModified = (state.courseList as any[]).slice(0);
+        const index = arrModified.findIndex(el=> el.id === action.payload.id);
+        arrModified.splice(index, 1, action.payload.course);
+            return {
+                ...state,
+                courseList: arrModified,
+                isLoading: !state.isLoading
+            };
         default:
             return state;
     }
