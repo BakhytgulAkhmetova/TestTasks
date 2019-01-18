@@ -29,7 +29,7 @@ export interface InterfaceCourse {
     id?: number,
     name: string,
     description: string,
-    duration: number,
+    duration: string,
     date: number,
     authorList: {
        from: Array<InterfaceAuthor>,

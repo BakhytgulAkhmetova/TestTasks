@@ -11,7 +11,7 @@ import { getAuthorList } from '../../../store/author/asyncActions';
 import { addCourse } from '../../../store/course/asyncActions';
 import { InterfaceCourse } from '../../../interfaces';
 
-import './ContentCourseAdd.scss';
+import './ContentCourseEdit.scss';
 
 interface OwnProps {
     contentStyle: string,
@@ -77,7 +77,7 @@ const handlers = {
 }
 
 
-const ContentCourseAdd: React.SFC<OwnProps> = (props) => {
+const ContentCourseEdit: React.SFC<OwnProps> = (props) => {
     const { contentStyle,
             handleChangeCourseForm,
             courseForm,
@@ -115,4 +115,4 @@ export default compose<OwnProps, {}>(
             getAuthors();
         }
     })
-)(ContentCourseAdd);
+)(ContentCourseEdit);

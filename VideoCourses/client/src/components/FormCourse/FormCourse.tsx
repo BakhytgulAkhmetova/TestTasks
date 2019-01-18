@@ -1,7 +1,8 @@
 import React from 'react';
-import { compose, withState, withHandlers, lifecycle } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
 
 import { InterfaceCourse } from '../../interfaces';
+import { filterDuration } from '../../utils';
 
 import './FormCourse.scss';
 
@@ -14,6 +15,8 @@ interface OwnProps {
     changeAuthorList: Function,
     handleReplaceForward: any,
     handleReplaceBack: any,
+    handleSaveCourse: any,
+    handleCancel: any
     courseForm: InterfaceCourse,
     handleChangeCourseForm: any
     selectState: InterfaceSelectState,
@@ -26,7 +29,9 @@ interface OwnProps {
 interface AnotherProps {
     courseForm: InterfaceCourse,
     changeCourseForm: Function,
-    handleChangeCourseForm: any
+    handleChangeCourseForm: any,
+    handleSaveCourse: any,
+    handleCancel: any
 }
 
 const handlers = {
@@ -73,11 +78,14 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
     const { 
         handleReplaceForward,
         handleReplaceBack,
+        handleCancel,
+        handleSaveCourse,
         courseForm,
         selectState,
         handleChangeCourseForm,
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
+    const duration = filterDuration(parseInt(courseForm.duration));
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
@@ -100,11 +108,12 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
             <div className='form-course__date'>
                <label htmlFor='date'>Дата:</label>
                <input 
+                type="date"
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                 className='date__input'
                 id='date'
                 onChange={handleChangeCourseForm}
-                value={courseForm.date}
-                type='text'/>
+                value={courseForm.date}/>
             </div> 
             <div className='form-course__duration'>
                 <label htmlFor='duration'>Продолжительность:</label>
@@ -114,6 +123,11 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 onChange={handleChangeCourseForm}
                 value={courseForm.duration}
                 type='text'/>
+                {
+                    courseForm.duration?
+                    <span> {duration.hours} ч {duration.min} мин</span>: null
+                }
+                
             </div>
             <div className='form-course__author-list'>
                 <label htmlFor='author-list'>Список авторов:</label>
@@ -145,8 +159,8 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 </div>
             </div>
             <div className='form-course__button-group'>
-               <button type='button'>Сохранить</button>             
-               <button type='button'>Отмена</button>      
+               <button type='button'onClick={handleSaveCourse} >Сохранить</button>             
+               <button type='button' onClick={handleCancel} >Отмена</button>      
             </div>
         </form>
     );

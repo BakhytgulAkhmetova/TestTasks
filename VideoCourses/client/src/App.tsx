@@ -11,19 +11,9 @@ import { store } from './store/store';
 
 import './App.scss';
 
-class App extends React.Component<{}, { login: string }> {
-  constructor(props:any) {
-    super(props);
-    this.state = { login: ''}
-
-    store.subscribe(() => {
-      this.setState({
-        login: store.getState().authentication.login
-      });
-    });
-  }
+class App extends React.Component<{}, {}> {
   render() {
-    const { login } = this.state;
+    console.log(localStorage);
     return (
       <Provider store={store}>
         <div className="app">
@@ -37,7 +27,7 @@ class App extends React.Component<{}, { login: string }> {
                     contentStyle='layout__content-course-form' 
                     path='/courses/new' 
                     Content={ContentCourseAdd}
-                    propsHeader={{login,
+                    propsHeader={{login: localStorage.getItem('login'),
                      handleLogOff: () =>{localStorage.clear()},
                       pathList:['Курсы', 'Новый']}}
                     HeaderParticular={HeaderPrivate}/>
@@ -45,7 +35,7 @@ class App extends React.Component<{}, { login: string }> {
                     contentStyle='layout__content-courses' 
                     path='/courses' 
                     Content={ContentCourse} 
-                    propsHeader={{login,
+                    propsHeader={{login: localStorage.getItem('login'),
                      handleLogOff: () =>{localStorage.clear()},
                      pathList:['Курсы']
                     }}

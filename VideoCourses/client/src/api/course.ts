@@ -1,9 +1,5 @@
 import { baseUrl } from './constants';
 
-// const myHeaders = new Headers();
-// myHeaders.append('pragma', 'no-cache');
-// myHeaders.append('cache-control', 'no-cache');
-
 export const getCourseListFetch = async () => {
     const response = await fetch( baseUrl.concat('/courses'),{
         method: 'GET',
@@ -13,5 +9,17 @@ export const getCourseListFetch = async () => {
         },
       });
     const json = await response.json();
+    return json;
+}
+
+export const addCourseFetch = async (course: any) => {
+    const response = await fetch( baseUrl.concat('/courses'), {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(course) });
+    const json = response.json();
     return json;
 }

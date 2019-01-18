@@ -5,9 +5,10 @@ import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { InterfaceCourse } from '../../../interfaces';
+import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
+import { getAuthorList } from '../../../store/author/asyncActions';
 import { getCourseList } from '../../../store/course/asyncActions';
 
 import './ContentCourse.scss';
@@ -15,30 +16,38 @@ import './ContentCourse.scss';
 interface OwnProps {
     contentStyle: string,
     courseList: Array<InterfaceCourse>,
+    authorList: Array<InterfaceAuthor>,
     getCourseList: Function,
+    getAuthors: Function,
     history: any
 }
 
 interface StateProps {
-    courseList: Array<InterfaceCourse>
+    courseList: Array<InterfaceCourse>,
+    authorList: Array<InterfaceAuthor>
 }
 
 interface DispatchProps {
-    getCourseList: () => void
+    getCourseList: () => void,
+    getAuthors: () => void,
 }
 
 const mapStateToProps = (state: any): StateProps => ({
-    courseList: state.course.courseList
+    courseList: state.course.courseList,
+    authorList: state.author.authorList
 });
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     getCourseList: () => {
         dispatch(getCourseList());
-    }
+    },
+    getAuthors: () => {
+        dispatch(getAuthorList());
+    },
 });
 
 const ContentCourse: React.SFC<OwnProps> = (props) => {
-    const { contentStyle, courseList, history } = props;
+    const { contentStyle, courseList, history, authorList } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
         <div className={contentClass}>
@@ -50,6 +59,12 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
             {
                 courseList.map(course => (
                     <CourseItem 
+                    authors={authorList.filter(a => {
+                        const authorCommom = course.authorList.to.findIndex(el=> +el === +a.id);
+                        if(authorCommom !==-1){
+                            return a;
+                        }
+                    })}
                     key={course.id + course.name}
                     courseItemStyle='content-courses__course-item'
                     course = {course}/>
@@ -66,8 +81,9 @@ export default compose< OwnProps, {}>(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
-            const { getCourseList } = this.props;
+            const { getCourseList, getAuthors } = this.props;
             getCourseList();
+            getAuthors();
         }
     })
 )(ContentCourse);

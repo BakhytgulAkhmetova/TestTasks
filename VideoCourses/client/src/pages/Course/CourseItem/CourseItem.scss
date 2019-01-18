@@ -18,7 +18,7 @@
     @extend %flex-container;
     flex-direction: column;
     justify-content: space-between;
-    margin: 15px 0;
+    margin: 30px 0;
 }
 
 .course-item__info {
@@ -43,6 +43,11 @@
 }
 
 .info__name,
+.info__author,
 .info__description {
     padding: 0 10px;
+}
+
+.info__description {
+    width: 100%;
 }

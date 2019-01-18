@@ -19,6 +19,18 @@
     {
       "id": 5,
       "lastName": "Сидоров"
+    },
+    {
+      "id": 6,
+      "lastName": "Иванов"
+    },
+    {
+      "id": 7,
+      "lastName": "Петров"
+    },
+    {
+      "id": 8,
+      "lastName": "Сидоров"
     }
   ],
   "courses": [
@@ -53,6 +65,27 @@
       "idsAuthor": [
         1,
         2
+      ]
+    },
+    {
+      "name": "sfdf",
+      "id": "jr1jvin1",
+      "description": "sfsf",
+      "date": "1999-12-12",
+      "duration": "34",
+      "idsAuthor": [
+        1
+      ]
+    },
+    {
+      "name": "dfdf",
+      "id": "jr1k2lar",
+      "description": "sfsdfsdfsdfsdf",
+      "date": "2000-08-12",
+      "duration": "798",
+      "idsAuthor": [
+        2,
+        3
       ]
     }
   ],
