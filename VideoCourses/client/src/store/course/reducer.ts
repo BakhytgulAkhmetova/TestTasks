@@ -15,7 +15,7 @@ const course = (state = initialState, action: InterfaceAction) => {
             return {
                 ...state,
                 courseList: action.payload.map((c:any) => {
-                    return { ...c, authorList: { from: [], to: c.idsAuthor }}
+                    return { ...c, authorList: { from: [], to: c.idsAuthor || [] }}
                 }),
                 isLoading: !state.isLoading
             };
@@ -26,12 +26,11 @@ const course = (state = initialState, action: InterfaceAction) => {
             };
 
         case types.GET_COURSE_BY_ID_SUCCESS:
-        debugger;
             return {
                 ...state,
                 courseForm: {
                     ...action.payload,
-                    authorList: { from: [], to: action.payload.idsAuthor }
+                    authorList: { from: [], to: action.payload.idsAuthor || [] }
                 },
                 isLoading: !state.isLoading
             };
@@ -54,9 +53,10 @@ const course = (state = initialState, action: InterfaceAction) => {
             };
 
         case types.EDIT_COURSE_SUCCESS:
+        debugger;
         const arrModified = (state.courseList as any[]).slice(0);
         const index = arrModified.findIndex(el=> el.id === action.payload.id);
-        arrModified.splice(index, 1, action.payload.course);
+        arrModified.splice(index, 1, action.payload);
             return {
                 ...state,
                 courseList: arrModified,

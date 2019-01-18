@@ -40,6 +40,7 @@ export  const addCourse = (course: InterfaceCourse ) => {
     };
 };
 export  const editCourse = (id: any, course: InterfaceCourse ) => {
+    debugger;
     return async (dispatch: Redux.Dispatch<any>) => {
           dispatch(editCourseRequest());
           const courseEdit = {

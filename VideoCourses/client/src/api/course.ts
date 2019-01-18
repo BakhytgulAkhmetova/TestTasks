@@ -37,7 +37,7 @@ export const addCourseFetch = async (course: any) => {
 }
 
 export const editCourseFetch = async (id: any, course: any) => {
-    const response = await fetch( baseUrl.concat('/courses' + id), {
+    const response = await fetch( baseUrl.concat('/courses/' + id), {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',

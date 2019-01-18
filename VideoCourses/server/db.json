@@ -36,18 +36,27 @@
   "courses": [
     {
       "name": "Видеокурс 2323",
+      "description": "vvvvvvvvvvvvvvvvv",
+      "date": "2000-12-03",
+      "duration": "456",
+      "idsAuthor": [
+        3,
+        5,
+        6
+      ],
       "id": 1
     },
     {
-      "id": 5,
       "name": "Видеокурс 1",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.",
-      "date": "",
+      "date": "1998-02-03",
       "duration": 90,
       "idsAuthor": [
         3,
-        4
-      ]
+        4,
+        5
+      ],
+      "id": 5
     },
     {
       "id": 6,

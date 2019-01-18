@@ -28,7 +28,7 @@ class App extends React.Component<{}, {}> {
                     path='/courses/new' 
                     Content={ContentCourseAdd}
                     propsHeader={{login: localStorage.getItem('login'),
-                     handleLogOff: () =>{localStorage.clear()},
+                     handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
                       pathList:['Курсы', 'Новый']}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
@@ -36,7 +36,7 @@ class App extends React.Component<{}, {}> {
                     path='/courses/:id' 
                     Content={ContentCourseEdit}
                     propsHeader={{login: localStorage.getItem('login'),
-                    handleLogOff: () =>{localStorage.clear()},
+                    handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
                     pathList:['Курсы', 'id']}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
@@ -44,7 +44,7 @@ class App extends React.Component<{}, {}> {
                     path='/courses' 
                     Content={ContentCourse} 
                     propsHeader={{login: localStorage.getItem('login'),
-                     handleLogOff: () =>{localStorage.clear()},
+                     handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
                      pathList:['Курсы']
                     }}
                     HeaderParticular={HeaderPrivate}/>

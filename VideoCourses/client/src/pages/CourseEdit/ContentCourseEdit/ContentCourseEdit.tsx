@@ -6,10 +6,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import {FormCourse} from '../../../components/FormCourse';
-import { InterfaceAuthor } from '../../../interfaces';
+import { InterfaceAuthor, InterfaceCourse } from '../../../interfaces';
 import { getAuthorList } from '../../../store/author/asyncActions';
-import { addCourse } from '../../../store/course/asyncActions';
-import { InterfaceCourse } from '../../../interfaces';
+import { editCourse } from '../../../store/course/asyncActions';
 
 import './ContentCourseEdit.scss';
 
@@ -24,6 +23,7 @@ interface OwnProps {
     handleSaveCourse: any,
     handleCancel: any,
     history: any,
+    editCourse: Function,
     authorList: Array<InterfaceAuthor>
 }
 
@@ -34,6 +34,7 @@ interface StateProps {
 
 interface DispatchProps {
     getAuthors: () => void,
+    editCourse: (course: InterfaceCourse) => void,
 }
 
 const courseFormInitial: InterfaceCourse = {
@@ -56,6 +57,9 @@ const mapStateToProps = (state: any): StateProps => ({
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     getAuthors: () => {
         dispatch(getAuthorList());
+    },
+    editCourse: (course: InterfaceCourse) => {
+        dispatch(editCourse(course.id, course));
     }
 });
 
@@ -65,12 +69,13 @@ const handlers = {
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
     },
     handleSaveCourse: (props: OwnProps) => async () => {
-        const { history, courseForm } = props;
-        history.push('./courses');
+        const { history, courseForm, editCourse } = props;
+        editCourse(courseForm);
+        history.push('/courses');
     },
     handleCancel: (props: OwnProps) => () => {
         const { history } = props;
-        history.push('./courses');
+        history.push('/courses');
     }
 }
 
@@ -102,15 +107,24 @@ export default compose<OwnProps, {}>(
     withState('courseForm', 'changeCourseForm', courseFormInitial),
     withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
-        // componentDidUpdate(prevProps) {
-        //     if(prevProps.authorList!==this.props.authorList) {
-        //     const { authorList, changeCourseForm, courseForm } = this.props;
-        //     changeCourseForm({ ...courseForm, authorList:{ from: authorList, to: []} });
-        //     }
-        // },
+        componentDidUpdate(prevProps) {
+            if(prevProps.authorList!==this.props.authorList) {
+            const { authorList, changeCourseForm, courseForm } = this.props;
+            const authorsChosen = authorList.filter(a => {
+                const authorCommom = courseForm.authorList.to.findIndex(el=> +el === +a.id);
+                return authorCommom !==-1 ? a: null
+            });
+            const authorsNoChosen = authorList.filter(a => {
+                const authorCommom = courseForm.authorList.to.findIndex(el=> +el === +a.id);
+                return authorCommom ===-1 ? a: null
+            });
+            changeCourseForm({ ...courseForm, authorList:{ from: authorsNoChosen, to: authorsChosen} });
+            }
+        },
         componentDidMount() {
-            const { changeCourseForm, courseForEdit } = this.props;
+            const { changeCourseForm, courseForEdit, getAuthors } = this.props;
             changeCourseForm(courseForEdit);
+            getAuthors();
         }
     })
 )(ContentCourseEdit);
