@@ -1,9 +1,10 @@
 import Redux from 'redux';
 import uniqid from 'uniqid';
 
-import { getCourseListFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch } from '../../api/course';
+import { getCourseListFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch, getCourseListByNameFetch, getCourseListByDateFetch } from '../../api/course';
 import { InterfaceCourse } from '../../interfaces';
 import { getCourseListRequest, getCourseListSuccess,
+         getCourseListBySearchRequest, getCourseListBySearchSuccess,
          getCourseByIdRequest, getCourseByIdSuccess,
          editCourseRequest, editCourseSuccess,
         addCourseRequest, addCourseSuccess } from '../course/actionCreators';
@@ -52,5 +53,14 @@ export  const editCourse = (id: any, course: InterfaceCourse ) => {
           }
           await editCourseFetch(id, courseEdit);
           dispatch(editCourseSuccess(course));
+    };
+};
+
+export  const getCourseListByName = (param: string) => {
+    return async (dispatch: Redux.Dispatch<any>) => {
+          dispatch(getCourseListBySearchRequest());
+          const resultFirst = await getCourseListByNameFetch(param);
+          const result =  resultFirst.length? resultFirst: await getCourseListByDateFetch(param);
+          dispatch(getCourseListBySearchSuccess(result));
     };
 };

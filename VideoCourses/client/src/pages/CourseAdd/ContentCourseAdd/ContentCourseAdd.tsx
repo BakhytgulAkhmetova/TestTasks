@@ -68,11 +68,11 @@ const handlers = {
     handleSaveCourse: (props: OwnProps) => async () => {
         const { history, addCourse, courseForm } = props;
         await addCourse(courseForm);
-        history.push('./courses');
+        history.push('/courses');
     },
     handleCancel: (props: OwnProps) => () => {
         const { history } = props;
-        history.push('./courses');
+        history.push('/courses');
     }
 }
 

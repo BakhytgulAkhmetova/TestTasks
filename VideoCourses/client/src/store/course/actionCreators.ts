@@ -44,3 +44,14 @@ export const editCourseSuccess = (payload: any) => {
         payload
      };
 };
+
+export const getCourseListBySearchRequest = () => {
+    return { type: actions.GET_COURSE_LIST_BY_SEARCH_REQUEST };
+};
+
+export const getCourseListBySearchSuccess = (payload: Array<InterfaceCourse>) => {
+    return { 
+        type: actions.GET_COURSE_LIST_BY_SEARCH_SUCCESS,
+        payload
+     };
+};

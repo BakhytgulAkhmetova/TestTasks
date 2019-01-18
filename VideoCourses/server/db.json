@@ -47,14 +47,15 @@
       "id": 1
     },
     {
-      "name": "Видеокурс 1",
+      "name": "Видео",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem architecto ut, temporibus quos rem suscipit aut qui corrupti.",
       "date": "1998-02-03",
-      "duration": 90,
+      "duration": "2222",
       "idsAuthor": [
         3,
         4,
-        5
+        5,
+        2
       ],
       "id": 5
     },
@@ -88,6 +89,17 @@
       "idsAuthor": [
         2,
         3
+      ]
+    },
+    {
+      "name": "ыаыва",
+      "id": "jr231bi6",
+      "description": "аываыва",
+      "date": "2018-12-12",
+      "duration": "45",
+      "idsAuthor": [
+        2,
+        5
       ]
     }
   ],

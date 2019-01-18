@@ -1,16 +1,15 @@
 import React from 'react';
 import Redux from 'redux';
 import classnames from 'classnames';
-import { compose, lifecycle, withHandlers } from 'recompose';
+import { compose, lifecycle, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
-import { getCourseById } from '../../../store/course/asyncActions';
+import { getCourseById, getCourseList, getCourseListByName } from '../../../store/course/asyncActions';
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
 import { getAuthorList } from '../../../store/author/asyncActions';
-import { getCourseList } from '../../../store/course/asyncActions';
 
 import './ContentCourse.scss';
 
@@ -22,7 +21,13 @@ interface OwnProps {
     getCourseById: Function,
     getAuthors: Function,
     handleOpenEditPage: any,
-    history: any
+    history: any,
+    inputFilter: string,
+    changeInputFilter: Function,
+    handleChangeInput: any,
+    handleOnSearch:any,
+    filterCourseList: Function
+
 }
 
 interface StateProps {
@@ -35,6 +40,7 @@ interface DispatchProps {
     getCourseList: () => void,
     getCourseById: (id:any) => void,
     getAuthors: () => void,
+    filterCourseList: (param: string) => void,
 }
 
 const mapStateToProps = (state: any): StateProps => ({
@@ -53,6 +59,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
     getAuthors: () => {
         dispatch(getAuthorList());
     },
+    filterCourseList: (param: string) => {
+        dispatch(getCourseListByName(param));
+    },
 });
 
 const handlers = {
@@ -62,16 +71,32 @@ const handlers = {
         const path = '/courses/' + id;
         await getCourseById(id);
         history.push(path)
+    },
+    handleOnSearch: (props: OwnProps) => () => {
+        const { inputFilter, filterCourseList } = props;
+        filterCourseList(inputFilter);
     }
 }
 
 const ContentCourse: React.SFC<OwnProps> = (props) => {
-    const { contentStyle, courseList, history, authorList, handleOpenEditPage } = props;
+    const { contentStyle,
+            courseList,
+            history, authorList,
+            inputFilter,
+            changeInputFilter,
+            handleChangeInput,
+            handleOnSearch,
+            handleOpenEditPage } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
         <div className={contentClass}>
             <div className='courses__options'>
-                <FormFilter filterSizeStyle='content-courses__filter'/>
+                <FormFilter 
+                handleOnSearch={handleOnSearch}
+                handleChangeInput={handleChangeInput}
+                inputFilter={inputFilter}
+                changeInputFilter={changeInputFilter}
+                filterSizeStyle='content-courses__filter'/>
                 <button className='content-courses__button' onClick={ () => (history.push('/courses/new') ) } >Добавить курс</button>
             </div>
             <div className='courses__list'>
@@ -98,6 +123,7 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
 
 export default compose< OwnProps, {}>(
     withRouter,
+    withState('inputFilter', 'changeInputFilter', '' ),
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {

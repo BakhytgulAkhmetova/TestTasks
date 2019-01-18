@@ -1,1 +1,1 @@
-export * from './FormFilter';
+export { default as FormFilter} from './FormFilter';

@@ -1,4 +1,4 @@
-import React, { Component, EventHandler } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -9,6 +9,7 @@ import { ContentCourseAdd } from './pages/CourseAdd/ContentCourseAdd';
 import { ContentCourseEdit } from './pages/CourseEdit/ContentCourseEdit';
 import { HeaderPrivate } from './components/HeaderPrivate';
 import { store } from './store/store';
+import { ModalProvider } from './components/ModalProvider'
 
 import './App.scss';
 
@@ -51,6 +52,7 @@ class App extends React.Component<{}, {}> {
                 <Route path='/' render={() => (<Redirect  from='/' to='/courses'/>)}/>
               </Switch>
           </Router>
+          <ModalProvider/>
         </div>
       </Provider>
     );

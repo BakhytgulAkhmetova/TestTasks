@@ -19,6 +19,21 @@ const course = (state = initialState, action: InterfaceAction) => {
                 }),
                 isLoading: !state.isLoading
             };
+
+        case types.GET_COURSE_LIST_BY_SEARCH_REQUEST:
+            return {
+                ...state,
+                isLoading: !state.isLoading
+            };
+
+        case types.GET_COURSE_LIST_BY_SEARCH_SUCCESS:
+            return {
+                ...state,
+                courseList: action.payload.map((c:any) => {
+                    return { ...c, authorList: { from: [], to: c.idsAuthor || [] }}
+                }),
+                isLoading: !state.isLoading
+            };
         case types.GET_COURSE_BY_ID_REQUEST:
             return {
                 ...state,
@@ -53,7 +68,6 @@ const course = (state = initialState, action: InterfaceAction) => {
             };
 
         case types.EDIT_COURSE_SUCCESS:
-        debugger;
         const arrModified = (state.courseList as any[]).slice(0);
         const index = arrModified.findIndex(el=> el.id === action.payload.id);
         arrModified.splice(index, 1, action.payload);

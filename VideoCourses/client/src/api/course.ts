@@ -47,3 +47,27 @@ export const editCourseFetch = async (id: any, course: any) => {
     const json = response.json();
     return json;
 }
+
+export const getCourseListByNameFetch = async (param: string) => {
+    const response = await fetch( baseUrl.concat('/courses?name_like=' + param),{
+        method: 'GET',
+        headers: {
+            'pragma': 'no-cache',
+            'cache-control': 'no-cache'
+        },
+      });
+    const json = await response.json();
+    return json;
+}
+
+export const getCourseListByDateFetch = async (param: string) => {
+    const response = await fetch( baseUrl.concat('/courses?date_like=' + param),{
+        method: 'GET',
+        headers: {
+            'pragma': 'no-cache',
+            'cache-control': 'no-cache'
+        },
+      });
+    const json = await response.json();
+    return json;
+}
