@@ -1,15 +1,10 @@
 import React from 'react';
-import { compose, withHandlers, withState } from 'recompose';
+import { compose, withHandlers } from 'recompose';
+import classnames from 'classnames';
+
+import { InterfaceModal } from '../../interfaces';
 
 import './Modal.scss';
-
-interface OwnProps {
-    modal: {
-        header: any,
-        content: any
-    },
-    handleClose: any
-}
 
 const handlers = {
     handleClose: () => () => {
@@ -17,20 +12,20 @@ const handlers = {
     }
 }
 
-const Modal: React.SFC<OwnProps> = (props) => {
-    const { modal, handleClose } = props;
+const Modal: React.SFC<InterfaceModal> = (props) => {
+    const { isOpen, header, content, styleContent } = props;
+    const modalClass = classnames({'display': isOpen, 'modal': true } );
     return(
-        <div className="modal">
-            <div className='modal-content'>
-            <span onClick={handleClose} className="close">&times;</span>
-            <div>{modal.header}</div>
-            <div>{modal.content}</div>
+        <div className={ modalClass }>
+            <div className={styleContent}>
+            <span className="close">&times;</span>
+            <div>{header}</div>
+            <div>{content}</div>
             </div>
         </div>
-
     );
 }
 
-export default compose<OwnProps, {}>(
+export default compose<InterfaceModal, InterfaceModal>(
     withHandlers(handlers)
 )(Modal);

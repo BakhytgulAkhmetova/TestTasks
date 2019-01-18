@@ -24,3 +24,28 @@
     margin-left: auto;
     height: 40px;;
 }
+
+.modal-content-delete {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    height: 280px;
+}
+
+.btn-group-delete-course {
+    @extend %flex-container;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 60px 30px 0 30px;
+}
+
+.btn-group-delete-course button {
+    height: 30px;
+    width: 100px;
+}
+
+.header-delete-course {
+    text-align: center;
+}

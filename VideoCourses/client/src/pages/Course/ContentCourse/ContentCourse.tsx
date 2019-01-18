@@ -10,6 +10,7 @@ import { getCourseById, getCourseList, getCourseListByName } from '../../../stor
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
 import { getAuthorList } from '../../../store/author/asyncActions';
+import { fillHeader, fillContent, openModal, changeStyle, closeModal } from '../../../store/modal/actionCreators';
 
 import './ContentCourse.scss';
 
@@ -26,7 +27,12 @@ interface OwnProps {
     changeInputFilter: Function,
     handleChangeInput: any,
     handleOnSearch:any,
-    filterCourseList: Function
+    filterCourseList: Function,
+    handleOpenDeleteModal: any,
+    openModalDeleteCourse: Function,
+    handleCloseModal: any,
+    handleDeleteCourse: any,
+    closeModal: Function
 
 }
 
@@ -41,6 +47,8 @@ interface DispatchProps {
     getCourseById: (id:any) => void,
     getAuthors: () => void,
     filterCourseList: (param: string) => void,
+    openModalDeleteCourse: () => void,
+    closeModal: () => void;
 }
 
 const mapStateToProps = (state: any): StateProps => ({
@@ -49,7 +57,7 @@ const mapStateToProps = (state: any): StateProps => ({
     cour:state.course.courseForm
 });
    
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, props:OwnProps): DispatchProps => ({
     getCourseList: () => {
         dispatch(getCourseList());
     },
@@ -62,6 +70,20 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
     filterCourseList: (param: string) => {
         dispatch(getCourseListByName(param));
     },
+    openModalDeleteCourse: () => {
+        const { handleCloseModal, handleDeleteCourse } = props;
+
+        dispatch(fillHeader(<h1 className='header-delete-course'>Вы действительно хотите удалить курс?</h1>));
+        dispatch(fillContent(<div className='btn-group-delete-course'>
+            <button onClick={handleDeleteCourse} type='button'>Да</button>
+            <button onClick={handleCloseModal} type='button'>Нет</button>
+        </div>));
+        dispatch(changeStyle('modal-content-delete'));
+        dispatch(openModal());
+    },
+    closeModal: () => {
+        dispatch(closeModal());
+    }
 });
 
 const handlers = {
@@ -70,11 +92,21 @@ const handlers = {
         const id = event.currentTarget.id;
         const path = '/courses/' + id;
         await getCourseById(id);
-        history.push(path)
+        history.push(path);
+    },
+    handleOpenDeleteModal: (props: OwnProps) => () => {
+        const { openModalDeleteCourse } = props;
+        openModalDeleteCourse();
     },
     handleOnSearch: (props: OwnProps) => () => {
         const { inputFilter, filterCourseList } = props;
         filterCourseList(inputFilter);
+    },
+    handleCloseModal: (props: OwnProps) => () => {
+        props.closeModal();
+    },
+    handleDeleteCourse: (props: OwnProps) => () => {
+        props.closeModal();
     }
 }
 
@@ -86,6 +118,7 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
             changeInputFilter,
             handleChangeInput,
             handleOnSearch,
+            handleOpenDeleteModal,
             handleOpenEditPage } = props;
     const contentClass = classnames('content-courses', contentStyle);
     return(
@@ -109,11 +142,11 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
                             return a;
                         }
                     })}
+                    handleOpenDeleteModal={handleOpenDeleteModal}
                     handleOpenEditPage={handleOpenEditPage}
                     key={course.id + course.name}
                     courseItemStyle='content-courses__course-item'
                     course = {course}/>
-
                 ))
             }
             </div>
@@ -122,9 +155,11 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
 };
 
 export default compose< OwnProps, {}>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withHandlers(handlers),
     withRouter,
     withState('inputFilter', 'changeInputFilter', '' ),
-    connect(mapStateToProps, mapDispatchToProps),
+    // withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
             const { getCourseList, getAuthors } = this.props;
@@ -132,5 +167,4 @@ export default compose< OwnProps, {}>(
             getAuthors();
         }
     }),
-    withHandlers(handlers)
 )(ContentCourse);

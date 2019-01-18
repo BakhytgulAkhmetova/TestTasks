@@ -37,3 +37,9 @@ export interface InterfaceCourse {
     }
 }
 
+export interface InterfaceModal {
+    isOpen: boolean,
+    styleContent: string,
+    header: any,
+    content: any
+}
