@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import {FormCourse} from '../../../components/FormCourse';
 import { InterfaceAuthor, InterfaceCourse } from '../../../interfaces';
 import { getAuthorList } from '../../../store/author/asyncActions';
-import { editCourse } from '../../../store/course/asyncActions';
+import { editCourse, getCourseById } from '../../../store/course/asyncActions';
 
 import './ContentCourseEdit.scss';
 
@@ -34,6 +34,7 @@ interface StateProps {
 
 interface DispatchProps {
     getAuthors: () => void,
+    getCourseById: (id:any) => void,
     editCourse: (course: InterfaceCourse) => void,
 }
 
@@ -58,6 +59,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): 
     getAuthors: () => {
         dispatch(getAuthorList());
     },
+    getCourseById: (id: any) => {
+        dispatch(getCourseById(id));
+    },
     editCourse: (course: InterfaceCourse) => {
         dispatch(editCourse(course.id, course));
     }
@@ -79,14 +83,15 @@ const handlers = {
     }
 }
 
-
 const ContentCourseEdit: React.SFC<OwnProps> = (props) => {
     const { contentStyle,
             handleChangeCourseForm,
             courseForm,
             handleSaveCourse,
             handleCancel,
+            courseForEdit,
             changeCourseForm } = props;
+            debugger;
     const contentClass = classnames('content-course-new', contentStyle);
     return(
         <div className={contentClass}>
@@ -108,23 +113,34 @@ export default compose<OwnProps, {}>(
     withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
         componentDidUpdate(prevProps) {
-            if(prevProps.authorList!==this.props.authorList) {
-            const { authorList, changeCourseForm, courseForm } = this.props;
+            if(prevProps.courseForEdit!==this.props.courseForEdit) {
+            const { authorList, courseForm, changeCourseForm, courseForEdit } = this.props;
             const authorsChosen = authorList.filter(a => {
-                const authorCommom = courseForm.authorList.to.findIndex(el=> +el === +a.id);
+                const authorCommom = courseForEdit.authorList.to.findIndex(el=> +el === +a.id);
                 return authorCommom !==-1 ? a: null
             });
             const authorsNoChosen = authorList.filter(a => {
-                const authorCommom = courseForm.authorList.to.findIndex(el=> +el === +a.id);
+                const authorCommom = courseForEdit.authorList.to.findIndex(el=> +el === +a.id);
                 return authorCommom ===-1 ? a: null
             });
-            changeCourseForm({ ...courseForm, authorList:{ from: authorsNoChosen, to: authorsChosen} });
+            changeCourseForm({ ...courseForm,
+                name: courseForEdit.name,
+                id: courseForEdit.id,
+                date: courseForEdit.date,
+                description: courseForEdit.description,
+                duration: courseForEdit.duration,
+                authorList:{ from: authorsNoChosen, to: authorsChosen} });
             }
         },
         componentDidMount() {
-            const { changeCourseForm, courseForEdit, getAuthors } = this.props;
-            changeCourseForm(courseForEdit);
+            const { 
+                    getCourseById,
+                    history,
+                    getAuthors } = this.props;
+            const pathArray = history.location.pathname.split('/');
             getAuthors();
+            debugger;
+            getCourseById(pathArray[2]);
         }
     })
 )(ContentCourseEdit);

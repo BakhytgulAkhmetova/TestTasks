@@ -135,9 +135,8 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     <select value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
                     <option value="" disabled>None</option>
                     {
-                            courseForm.authorList.from.map(author => (<option
+                        courseForm.authorList.from.map(author => (<option
                             key={author.id + author.lastName} 
-                            id={author.id + author.lastName} 
                             value={author.lastName}>{author.lastName}</option>))
                     }
                     </select>
@@ -152,7 +151,6 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     {
                         courseForm.authorList.to.map(author => (<option
                             key={author.id + author.lastName} 
-                            id={author.id + author.lastName} 
                             value={author.lastName}>{author.lastName}</option>))
                     }
                     </select>

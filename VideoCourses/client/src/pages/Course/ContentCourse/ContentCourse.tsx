@@ -20,7 +20,6 @@ interface OwnProps {
     courseList: Array<InterfaceCourse>,
     authorList: Array<InterfaceAuthor>,
     getCourseList: Function,
-    getCourseById: Function,
     getAuthors: Function,
     handleOpenEditPage: any,
     history: any,
@@ -42,7 +41,6 @@ interface StateProps {
 
 interface DispatchProps {
     getCourseList: () => void,
-    getCourseById: (id:any) => void,
     getAuthors: () => void,
     filterCourseList: (param: string) => void,
     openModalDeleteCourse: (id: any) => void,
@@ -58,9 +56,6 @@ const mapStateToProps = (state: any): StateProps => ({
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, props:OwnProps): DispatchProps => ({
     getCourseList: () => {
         dispatch(getCourseList());
-    },
-    getCourseById: async (id: any) => {
-       await dispatch(getCourseById(id));
     },
     getAuthors: () => {
         dispatch(getAuthorList());
@@ -81,10 +76,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, props:OwnProps): Disp
 
 const handlers = {
     handleOpenEditPage: (props: OwnProps) => async (event: React.MouseEvent<HTMLElement>) => {
-        const { history, getCourseById }  = props;
+        const { history }  = props;
         const id = event.currentTarget.id;
         const path = '/courses/' + id;
-        await getCourseById(id);
         history.push(path);
     },
     handleOpenDeleteModal: (props: OwnProps) => (e: React.MouseEvent<HTMLElement>) => {
