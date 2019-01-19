@@ -56,11 +56,10 @@ const course = (state = initialState, action: InterfaceAction) => {
             };
 
         case types.ADD_COURSE_SUCCESS:
-            return {
-                ...state,
-                courseList: (state.courseList as any[]).concat([action.payload]),
-                isLoading: !state.isLoading
-            };
+        return {
+            ...state,
+            isLoading: !state.isLoading
+        };
         case types.DELETE_COURSE_REQUEST:
             return {
                 ...state,

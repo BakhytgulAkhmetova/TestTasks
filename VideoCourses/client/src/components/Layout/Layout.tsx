@@ -7,7 +7,9 @@ import './Layout.scss';
 import logo from '../../images/logo.svg';
 
 const Layout = ( props: InterfaceLayoutHeader) => {
-  let { Content, HeaderParticular, path, contentStyle, propsHeader } = props;
+let { Content, HeaderParticular,
+   path, contentStyle, propsHeader, propsContent } = props;
+   debugger;
   return (
     <Route path={path} render={() => localStorage.getItem('token') || path ==='/login'?
        (
@@ -24,7 +26,7 @@ const Layout = ( props: InterfaceLayoutHeader) => {
               headerStyle='layout__header-particular'/>: null
         }
         </div>
-          <Content contentStyle={contentStyle} />
+          <Content propsContent={propsContent} contentStyle={contentStyle} />
         <div className="layout__footer">
          <h2 className='layout__footer-caption'>Copyright 2019</h2>
         </div>

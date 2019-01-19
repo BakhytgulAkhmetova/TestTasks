@@ -68,6 +68,7 @@ export  const editCourse = (id: any, course: InterfaceCourse ) => {
 export  const getCourseListByName = (param: string) => {
     return async (dispatch: Redux.Dispatch<any>) => {
           dispatch(getCourseListBySearchRequest());
+          debugger;
           const resultFirst = await getCourseListByNameFetch(param);
           const result =  resultFirst.length? resultFirst: await getCourseListByDateFetch(param);
           dispatch(getCourseListBySearchSuccess(result));

@@ -24,6 +24,7 @@ interface OwnProps {
     handleCancel: any,
     history: any,
     editCourse: Function,
+    propsContent: any,
     authorList: Array<InterfaceAuthor>
 }
 
@@ -133,14 +134,14 @@ export default compose<OwnProps, {}>(
             }
         },
         componentDidMount() {
-            const { 
+            const { propsContent,
                     getCourseById,
                     history,
                     getAuthors } = this.props;
             const pathArray = history.location.pathname.split('/');
             getAuthors();
-            debugger;
             getCourseById(pathArray[2]);
+            propsContent.handleChangeLayoutCourseId(pathArray[2]);
         }
     })
 )(ContentCourseEdit);

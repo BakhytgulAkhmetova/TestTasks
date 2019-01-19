@@ -87,6 +87,7 @@ const handlers = {
     },
     handleOnSearch: (props: OwnProps) => () => {
         const { inputFilter, filterCourseList } = props;
+        debugger;
         filterCourseList(inputFilter);
     }
 }
@@ -138,8 +139,8 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
 export default compose< OwnProps, {}>(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps),
-    withHandlers(handlers),
     withState('inputFilter', 'changeInputFilter', '' ),
+    withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
             const { getCourseList, getAuthors } = this.props;

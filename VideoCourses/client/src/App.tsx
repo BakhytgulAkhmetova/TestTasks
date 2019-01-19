@@ -13,8 +13,29 @@ import { ModalProvider } from './components/ModalProvider'
 
 import './App.scss';
 
-class App extends React.Component<{}, {}> {
+interface State {
+  login: string | null,
+  courseId: string
+}
+
+class App extends React.Component<{}, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = { login: localStorage.getItem('login'), courseId: '' }
+  }
+  handleLogOff () {
+    this.setState({ login: null} as State);
+    localStorage.clear(); 
+  }
+  handleChangeLayoutLogin (login: string ) {
+    localStorage.setItem('login', login);
+    this.setState({...this.state, login: localStorage.getItem('login')} as State);
+  }
+  handleChangeLayoutCourseId (id: string ) {
+    this.setState({ ...this.state, courseId: id } as State);
+  }
   render() {
+    const pathArray = window.location.pathname.split('/');
     return (
       <Provider store={store}>
         <div className="app">
@@ -23,30 +44,32 @@ class App extends React.Component<{}, {}> {
                 <Layout 
                     contentStyle='layout__content-login' 
                     path='/login' 
+                    propsContent={{ handleChangeLayoutLogin: this.handleChangeLayoutLogin.bind(this)}}
                     Content={ContentLogin}/>
                 <Layout 
                     contentStyle='layout__content-course-form' 
                     path='/courses/new' 
                     Content={ContentCourseAdd}
-                    propsHeader={{login: localStorage.getItem('login'),
-                     handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
-                      pathList:['Курсы', 'Новый']}}
+                    propsHeader={{login: this.state.login,
+                    handleLogOff: this.handleLogOff.bind(this),
+                    pathList:['Курсы', 'Новый']}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-course-form' 
                     path='/courses/:id' 
                     Content={ContentCourseEdit}
-                    propsHeader={{login: localStorage.getItem('login'),
-                    handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
-                    pathList:['Курсы', 'id']}}
+                    propsContent={{handleChangeLayoutCourseId: this.handleChangeLayoutCourseId.bind(this)}}
+                    propsHeader={{login: this.state.login,
+                    handleLogOff: this.handleLogOff.bind(this),
+                    pathList:['Курсы', 'Курс ' + this.state.courseId]}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-courses' 
                     path='/courses' 
                     Content={ContentCourse} 
-                    propsHeader={{login: localStorage.getItem('login'),
-                     handleLogOff: () =>{localStorage.clear(); console.log(localStorage)},
-                     pathList:['Курсы']
+                    propsHeader={{login: this.state.login,
+                    handleLogOff: this.handleLogOff.bind(this),
+                    pathList:['Курсы']
                     }}
                     HeaderParticular={HeaderPrivate}/>
                 <Route path='/' render={() => (<Redirect  from='/' to='/courses'/>)}/>

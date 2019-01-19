@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { FormLogin } from '../FormLogin';
 import { InterfaceLoginForm } from '../../../interfaces';
 import { login } from '../../../store/authentication/asyncActions';
+import { loginSuccess } from '../../../store/authentication/actionCreators';
 
 import './ContentLogin.scss';
 
@@ -17,6 +18,7 @@ interface OwnProps {
     handleChangeLogin: ChangeEventHandler,
     handleChangePassword: ChangeEventHandler,
     handleLogIn: any,
+    propsContent: any,
     onLogIn: Function ,
     changeLoginForm: Function,
     history: any
@@ -28,7 +30,11 @@ interface DispatchProps {
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     onLogIn: async (loginForm: InterfaceLoginForm) => { 
-        await dispatch(login(loginForm));
+       const json: any = await dispatch(login(loginForm));
+       if(json['token']) {
+        await localStorage.setItem('token', json['token']);
+        ownProps.propsContent.handleChangeLayoutLogin(loginForm.login);
+        }
         ownProps.history.push('/courses');
     }
 });

@@ -8,7 +8,8 @@ export interface InterfaceLayoutHeader {
     HeaderParticular?: any,
     path: string,
     contentStyle: string,
-    propsHeader?: any
+    propsHeader?: any,
+    propsContent?: any
 }
 
 export interface InterfaceLoginForm {
