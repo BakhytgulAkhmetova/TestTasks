@@ -38,6 +38,7 @@ export const CourseItem: React.SFC<OwnProps> = (props) => {
                        onClick={handleOpenEditPage}
                        className='options__button'>Редактировать</button>
                <button type='button'
+                       id={course.id}
                        onClick={handleOpenDeleteModal}
                        className='options__button'>Удалить</button>
             </div>

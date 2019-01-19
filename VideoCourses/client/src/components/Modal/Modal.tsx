@@ -6,26 +6,23 @@ import { InterfaceModal } from '../../interfaces';
 
 import './Modal.scss';
 
-const handlers = {
-    handleClose: () => () => {
-        
-    }
+interface OwnProps {
+    modal: InterfaceModal,
+    handleCloseModal: any
 }
 
-const Modal: React.SFC<InterfaceModal> = (props) => {
-    const { isOpen, header, content, styleContent } = props;
-    const modalClass = classnames({'display': isOpen, 'modal': true } );
+const Modal: React.SFC<OwnProps> = (props) => {
+    const { modal, handleCloseModal } = props;
+    const modalClass = classnames({'display': modal.isOpen, 'modal': true } );
     return(
         <div className={ modalClass }>
-            <div className={styleContent}>
-            <span className="close">&times;</span>
-            <div>{header}</div>
-            <div>{content}</div>
+            <div className={modal.styleContent}>
+            <span onClick={handleCloseModal} className="close">&times;</span>
+            <div>{modal.header}</div>
+            <div>{modal.content}</div>
             </div>
         </div>
     );
 }
 
-export default compose<InterfaceModal, InterfaceModal>(
-    withHandlers(handlers)
-)(Modal);
+export default Modal;

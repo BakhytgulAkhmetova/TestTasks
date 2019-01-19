@@ -5,6 +5,7 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import  { ContentDeleteCourse } from '../../../modalViews/deleteCourse/ContentDeleteCourse';
 import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
 import { getCourseById, getCourseList, getCourseListByName } from '../../../store/course/asyncActions';
 import { FormFilter } from '../FormFilter';
@@ -29,10 +30,7 @@ interface OwnProps {
     handleOnSearch:any,
     filterCourseList: Function,
     handleOpenDeleteModal: any,
-    openModalDeleteCourse: Function,
-    handleCloseModal: any,
-    handleDeleteCourse: any,
-    closeModal: Function
+    openModalDeleteCourse: Function
 
 }
 
@@ -47,7 +45,7 @@ interface DispatchProps {
     getCourseById: (id:any) => void,
     getAuthors: () => void,
     filterCourseList: (param: string) => void,
-    openModalDeleteCourse: () => void,
+    openModalDeleteCourse: (id: any) => void,
     closeModal: () => void;
 }
 
@@ -70,14 +68,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, props:OwnProps): Disp
     filterCourseList: (param: string) => {
         dispatch(getCourseListByName(param));
     },
-    openModalDeleteCourse: () => {
-        const { handleCloseModal, handleDeleteCourse } = props;
-
+    openModalDeleteCourse: (id: any) => {
         dispatch(fillHeader(<h1 className='header-delete-course'>Вы действительно хотите удалить курс?</h1>));
-        dispatch(fillContent(<div className='btn-group-delete-course'>
-            <button onClick={handleDeleteCourse} type='button'>Да</button>
-            <button onClick={handleCloseModal} type='button'>Нет</button>
-        </div>));
+        dispatch(fillContent(<ContentDeleteCourse courseId={id}/>));
         dispatch(changeStyle('modal-content-delete'));
         dispatch(openModal());
     },
@@ -94,19 +87,13 @@ const handlers = {
         await getCourseById(id);
         history.push(path);
     },
-    handleOpenDeleteModal: (props: OwnProps) => () => {
+    handleOpenDeleteModal: (props: OwnProps) => (e: React.MouseEvent<HTMLElement>) => {
         const { openModalDeleteCourse } = props;
-        openModalDeleteCourse();
+        openModalDeleteCourse(e.currentTarget.id);
     },
     handleOnSearch: (props: OwnProps) => () => {
         const { inputFilter, filterCourseList } = props;
         filterCourseList(inputFilter);
-    },
-    handleCloseModal: (props: OwnProps) => () => {
-        props.closeModal();
-    },
-    handleDeleteCourse: (props: OwnProps) => () => {
-        props.closeModal();
     }
 }
 
@@ -155,11 +142,10 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
 };
 
 export default compose< OwnProps, {}>(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
     withHandlers(handlers),
-    withRouter,
     withState('inputFilter', 'changeInputFilter', '' ),
-    // withHandlers(handlers),
     lifecycle<OwnProps, {}> ({
         componentDidMount() {
             const { getCourseList, getAuthors } = this.props;

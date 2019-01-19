@@ -34,6 +34,17 @@ export const addCourseSuccess = (payload: any) => {
      };
 };
 
+export const deleteCourseRequest = () => {
+    return { type: actions.DELETE_COURSE_REQUEST };
+};
+
+export const deleteCourseSuccess = (payload: any) => {
+    return { 
+        type: actions.DELETE_COURSE_SUCCESS,
+        payload
+     };
+};
+
 export const editCourseRequest = () => {
     return { type: actions.EDIT_COURSE_REQUEST };
 };

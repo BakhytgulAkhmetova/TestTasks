@@ -24,6 +24,13 @@ export const getCourseByIdFetch = async (id: any) => {
     return json;
 }
 
+export const deleteCourseFetch = async (id: any) => {
+    const response = await fetch( baseUrl.concat('/courses/' + id),{ method: 'DELETE'
+      });
+    const json = await response.json();
+    return json;
+}
+
 export const addCourseFetch = async (course: any) => {
     const response = await fetch( baseUrl.concat('/courses'), {
         method: 'POST',

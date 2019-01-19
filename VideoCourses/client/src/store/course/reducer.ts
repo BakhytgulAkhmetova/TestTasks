@@ -61,6 +61,21 @@ const course = (state = initialState, action: InterfaceAction) => {
                 courseList: (state.courseList as any[]).concat([action.payload]),
                 isLoading: !state.isLoading
             };
+        case types.DELETE_COURSE_REQUEST:
+            return {
+                ...state,
+                isLoading: !state.isLoading
+            };
+
+        case types.DELETE_COURSE_SUCCESS:
+        const arr = (state.courseList as any[]).slice(0);
+        const i = arr.findIndex(el=> el.id === action.payload.id);
+        arr.splice(i, 1);
+            return {
+                ...state,
+                courseList: arr,
+                isLoading: !state.isLoading
+            };   
         case types.EDIT_COURSE_REQUEST:
             return {
                 ...state,

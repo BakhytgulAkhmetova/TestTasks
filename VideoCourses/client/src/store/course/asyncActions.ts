@@ -1,12 +1,13 @@
 import Redux from 'redux';
 import uniqid from 'uniqid';
 
-import { getCourseListFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch, getCourseListByNameFetch, getCourseListByDateFetch } from '../../api/course';
+import { getCourseListFetch, deleteCourseFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch, getCourseListByNameFetch, getCourseListByDateFetch } from '../../api/course';
 import { InterfaceCourse } from '../../interfaces';
 import { getCourseListRequest, getCourseListSuccess,
-         getCourseListBySearchRequest, getCourseListBySearchSuccess,
-         getCourseByIdRequest, getCourseByIdSuccess,
-         editCourseRequest, editCourseSuccess,
+        deleteCourseRequest, deleteCourseSuccess,
+        getCourseListBySearchRequest, getCourseListBySearchSuccess,
+        getCourseByIdRequest, getCourseByIdSuccess,
+        editCourseRequest, editCourseSuccess,
         addCourseRequest, addCourseSuccess } from '../course/actionCreators';
 
 export  const getCourseList = () => {
@@ -22,6 +23,14 @@ export  const getCourseById = (id: any) => {
           dispatch(getCourseByIdRequest());
           const result = await getCourseByIdFetch(id);
           dispatch(getCourseByIdSuccess(result));
+    };
+};
+
+export  const deleteCourse = (id: any) => {
+    return async (dispatch: Redux.Dispatch<any>) => {
+          dispatch(deleteCourseRequest());
+          const result = await deleteCourseFetch(id);
+          dispatch(deleteCourseSuccess(result));
     };
 };
 
