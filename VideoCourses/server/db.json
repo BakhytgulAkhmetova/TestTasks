@@ -40,10 +40,7 @@
       "date": "1998-02-03",
       "duration": "2222",
       "idsAuthor": [
-        3,
-        4,
-        5,
-        2
+        4
       ],
       "id": 5
     },
@@ -107,13 +104,13 @@
     },
     {
       "name": "xcxc",
-      "id": "jr570goo",
-      "description": "xcxcxc",
-      "date": 0,
+      "description": "вавава",
+      "date": "2003-12-12",
       "duration": "34",
       "idsAuthor": [
         5
-      ]
+      ],
+      "id": "jr570goo"
     },
     {
       "name": "sdfsdf",

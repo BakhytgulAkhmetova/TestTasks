@@ -97,6 +97,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
         handleChangeCourseForm,
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
+        debugger;
     const duration = filterDuration(parseInt(courseForm.duration));
     return(
         <form className='form-course'>  

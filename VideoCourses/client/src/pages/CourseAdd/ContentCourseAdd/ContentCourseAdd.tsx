@@ -96,7 +96,6 @@ const handlers = {
              history.push('/courses');
 
         }
-        console.log(validator.listErrors);
     },
     handleCancel: (props: OwnProps) => () => {
         const { history } = props;

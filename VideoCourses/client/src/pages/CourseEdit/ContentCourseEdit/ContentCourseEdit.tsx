@@ -6,8 +6,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import {FormCourse} from '../../../components/FormCourse';
+import { Validator, } from '../../../validation/validator';
 import { InterfaceAuthor, InterfaceCourse } from '../../../interfaces';
 import { getAuthorList } from '../../../store/author/asyncActions';
+import { default as types } from '../../../validation/typesError';
+import { courseForm } from '../../../validation/validationConfig';
 import { editCourse, getCourseById } from '../../../store/course/asyncActions';
 
 import './ContentCourseEdit.scss';
@@ -44,7 +47,9 @@ interface DispatchProps {
     editCourse: (course: InterfaceCourse) => void,
 }
 
-const courseFormInitial: InterfaceCourse = {
+const validator = new Validator({ types, config: courseForm });
+
+const courseFormInitial: InterfaceCourseFormValidated = {
     id: -1,
     name: '',
     description: '',
@@ -53,7 +58,8 @@ const courseFormInitial: InterfaceCourse = {
     authorList: {
         from: [],
         to: []
-    }
+    },
+    errors: []
 }
 
 const mapStateToProps = (state: any): StateProps => ({
@@ -79,9 +85,28 @@ const handlers = {
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
     },
     handleSaveCourse: (props: OwnProps) => async () => {
-        const { history, courseForm, editCourse } = props;
-        editCourse(courseForm);
-        history.push('/courses');
+        const { history, courseForm, editCourse, changeCourseForm } = props;
+        const courseV = {
+            name: { value: courseForm.name },
+            description: { value: courseForm.description},
+            date: { value: courseForm.date},
+            duration: { value: courseForm.duration},
+            authorList: { value: courseForm.authorList.to} 
+        };
+        validator.cleanListErrors();
+        const hasErrors = validator.validate(courseV);
+        const errorList = validator.listErrors; 
+        if(hasErrors) {
+            changeCourseForm({
+                ...courseForm,
+                errors: errorList
+            })
+        }
+        else {
+            editCourse(courseForm);
+            history.push('/courses');
+
+        }
     },
     handleCancel: (props: OwnProps) => () => {
         const { history } = props;
@@ -95,7 +120,6 @@ const ContentCourseEdit: React.SFC<OwnProps> = (props) => {
             courseForm,
             handleSaveCourse,
             handleCancel,
-            courseForEdit,
             changeCourseForm } = props;
             debugger;
     const contentClass = classnames('content-course-new', contentStyle);
