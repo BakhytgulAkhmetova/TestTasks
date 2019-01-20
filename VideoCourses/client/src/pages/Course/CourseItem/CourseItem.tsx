@@ -10,8 +10,8 @@ interface OwnProps {
     course: InterfaceCourse,
     courseItemStyle: string,
     authors: Array<any>,
-    handleOpenEditPage: any,
-    handleOpenDeleteModal: any
+    handleOpenEditPage: (e: React.MouseEvent) => void,
+    handleOpenDeleteModal: (e: React.MouseEvent) => void
 }
 
 export const CourseItem: React.SFC<OwnProps> = (props) => {

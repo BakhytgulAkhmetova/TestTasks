@@ -1,13 +1,9 @@
-import { baseUrl } from './constants';
+import { baseUrl, headerGetRequest } from './constants';
 
 export const getAuthorListFetch = async () => {
     const response = await fetch( baseUrl.concat('/authors'),{
         method: 'GET',
-        headers: {
-            'pragma': 'no-cache',
-            'cache-control': 'no-cache'
-        },
+        headers: headerGetRequest,
       });
-    const json = await response.json();
-    return json;
+    return await response.json();
 }

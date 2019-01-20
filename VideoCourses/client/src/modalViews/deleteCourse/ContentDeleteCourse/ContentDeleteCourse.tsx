@@ -9,11 +9,11 @@ import { deleteCourse } from '../../../store/course/asyncActions'
 import './ContentDeleteCourse.scss';
 
 interface OwnProps {
-    handleDeleteCourse: any,
-    handleCloseModal: any,
-    closeModal: Function,
+    handleDeleteCourse: (e: React.MouseEvent)=> void,
+    handleCloseModal: () => void,
+    closeModal: () => void,
     courseId: any,
-    deleteCourse: Function
+    deleteCourse: (id: any) => void
 }
 
 interface AnotherProps {

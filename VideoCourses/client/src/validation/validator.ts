@@ -29,7 +29,6 @@ export class Validator implements InterfaceVlidator {
     validate = (data: any) => {
         for (const i in data) {
             if (data.hasOwnProperty(i)) {
-                debugger;
                 this.messages = [];
                 const typesForOne = this.config[i];
 

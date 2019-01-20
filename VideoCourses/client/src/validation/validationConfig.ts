@@ -2,7 +2,7 @@
 export const courseForm = {
     name: ['isNotEmpty'],
     description: ['isNotEmpty'],
-    date:['isNotEmpty'],
+    date:['isNotEmpty', 'isCorrectDate'],
     duration: ['isNotEmpty', 'isNumber'],
     authorList: ['isNotEmpty']
 };

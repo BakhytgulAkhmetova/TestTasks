@@ -12,8 +12,7 @@ import { getAuthorList } from '../../../store/author/asyncActions';
 import { default as types } from '../../../validation/typesError';
 import { courseForm } from '../../../validation/validationConfig';
 import { editCourse, getCourseById } from '../../../store/course/asyncActions';
-
-import './ContentCourseEdit.scss';
+import { regDateChange  } from '../../../constants';
 
 interface OwnProps {
     contentStyle: string,
@@ -22,9 +21,10 @@ interface OwnProps {
     getCourseById: Function,
     changeCourseForm: Function,
     courseForm: InterfaceCourseFormValidated,
-    handleChangeCourseForm: any,
-    handleSaveCourse: any,
-    handleCancel: any,
+    handleChangeCourseForm: (e: React.FormEvent) => void,
+    handleChangeDateInput: (e: React.FormEvent) => void,
+    handleSaveCourse: (e: React.MouseEvent) => void,
+    handleCancel: (e: React.MouseEvent) => void,
     history: any,
     editCourse: Function,
     propsContent: any,
@@ -40,7 +40,6 @@ interface InterfaceCourseFormValidated extends InterfaceCourse  {
     errors: Array<any>
 }
 
-
 interface DispatchProps {
     getAuthors: () => void,
     getCourseById: (id:any) => void,
@@ -54,7 +53,7 @@ const courseFormInitial: InterfaceCourseFormValidated = {
     name: '',
     description: '',
     duration: '',
-    date: 0,
+    date: '',
     authorList: {
         from: [],
         to: []
@@ -67,7 +66,7 @@ const mapStateToProps = (state: any): StateProps => ({
     courseForEdit: state.course.courseForm
 });
    
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
     getAuthors: () => {
         dispatch(getAuthorList());
     },
@@ -81,8 +80,16 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): 
 
 const handlers = {
     handleChangeCourseForm: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
-        const { changeCourseForm, courseForm } = props;
+        const { changeCourseForm, courseForm, propsContent } = props;
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
+        event.currentTarget.id==='name'?
+        propsContent.handleChangeLayoutCourseName(event.currentTarget.value): null;
+    },
+    handleChangeDateInput: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
+        const { changeCourseForm, courseForm } = props;
+        const value: string = event.currentTarget.value;
+        regDateChange.test(value)?
+        changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value}): null;
     },
     handleSaveCourse: (props: OwnProps) => async () => {
         const { history, courseForm, editCourse, changeCourseForm } = props;
@@ -117,15 +124,16 @@ const handlers = {
 const ContentCourseEdit: React.SFC<OwnProps> = (props) => {
     const { contentStyle,
             handleChangeCourseForm,
+            handleChangeDateInput,
             courseForm,
             handleSaveCourse,
             handleCancel,
             changeCourseForm } = props;
-            debugger;
     const contentClass = classnames('content-course-new', contentStyle);
     return(
         <div className={contentClass}>
             <FormCourse
+            handleChangeDateInput={handleChangeDateInput}
             handleSaveCourse={handleSaveCourse}
             handleCancel={handleCancel}
             courseForm={courseForm}
@@ -144,7 +152,7 @@ export default compose<OwnProps, {}>(
     lifecycle<OwnProps, {}> ({
         componentDidUpdate(prevProps) {
             if(prevProps.courseForEdit!==this.props.courseForEdit) {
-            const { authorList, courseForm, changeCourseForm, courseForEdit } = this.props;
+            const { authorList, courseForm, changeCourseForm, courseForEdit, propsContent } = this.props;
             const authorsChosen = authorList.filter(a => {
                 const authorCommom = courseForEdit.authorList.to.findIndex(el=> +el === +a.id);
                 return authorCommom !==-1 ? a: null
@@ -160,17 +168,17 @@ export default compose<OwnProps, {}>(
                 description: courseForEdit.description,
                 duration: courseForEdit.duration,
                 authorList:{ from: authorsNoChosen, to: authorsChosen} });
+                propsContent.handleChangeLayoutCourseName(courseForEdit.name);
             }
         },
         componentDidMount() {
-            const { propsContent,
+            const { 
                     getCourseById,
                     history,
                     getAuthors } = this.props;
             const pathArray = history.location.pathname.split('/');
             getAuthors();
             getCourseById(pathArray[2]);
-            propsContent.handleChangeLayoutCourseId(pathArray[2]);
         }
     })
 )(ContentCourseEdit);

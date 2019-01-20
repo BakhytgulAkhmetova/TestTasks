@@ -15,13 +15,13 @@ import './App.scss';
 
 interface State {
   login: string | null,
-  courseId: string
+  courseName: string
 }
 
 class App extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
-    this.state = { login: localStorage.getItem('login'), courseId: '' }
+    this.state = { login: localStorage.getItem('login'), courseName: '' }
   }
   handleLogOff () {
     this.setState({ login: null} as State);
@@ -31,8 +31,8 @@ class App extends React.Component<{}, State> {
     localStorage.setItem('login', login);
     this.setState({...this.state, login: localStorage.getItem('login')} as State);
   }
-  handleChangeLayoutCourseId (id: string ) {
-    this.setState({ ...this.state, courseId: id } as State);
+  handleChangeLayoutCourseName (name: string ) {
+    this.setState({ ...this.state, courseName: name } as State);
   }
   render() {
     const pathArray = window.location.pathname.split('/');
@@ -58,10 +58,10 @@ class App extends React.Component<{}, State> {
                     contentStyle='layout__content-course-form' 
                     path='/courses/:id' 
                     Content={ContentCourseEdit}
-                    propsContent={{handleChangeLayoutCourseId: this.handleChangeLayoutCourseId.bind(this)}}
+                    propsContent={{handleChangeLayoutCourseName: this.handleChangeLayoutCourseName.bind(this)}}
                     propsHeader={{login: this.state.login,
                     handleLogOff: this.handleLogOff.bind(this),
-                    pathList:['Курсы', 'Курс ' + this.state.courseId]}}
+                    pathList:['Курсы', 'Курс ' + this.state.courseName]}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-courses' 

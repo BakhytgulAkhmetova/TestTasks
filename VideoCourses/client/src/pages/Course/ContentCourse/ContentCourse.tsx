@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import  { ContentDeleteCourse } from '../../../modalViews/deleteCourse/ContentDeleteCourse';
 import { InterfaceCourse, InterfaceAuthor } from '../../../interfaces';
-import { getCourseById, getCourseList, getCourseListByName } from '../../../store/course/asyncActions';
+import { getCourseList, getCourseListByName } from '../../../store/course/asyncActions';
 import { FormFilter } from '../FormFilter';
 import { CourseItem } from '../CourseItem';
 import { getAuthorList } from '../../../store/author/asyncActions';
@@ -19,17 +19,17 @@ interface OwnProps {
     contentStyle: string,
     courseList: Array<InterfaceCourse>,
     authorList: Array<InterfaceAuthor>,
-    getCourseList: Function,
+    getCourseList: () => void,
     getAuthors: Function,
-    handleOpenEditPage: any,
+    handleOpenEditPage: (e: React.MouseEvent) => void,
     history: any,
     inputFilter: string,
     changeInputFilter: Function,
     handleChangeInput: any,
-    handleOnSearch:any,
-    filterCourseList: Function,
-    handleOpenDeleteModal: any,
-    openModalDeleteCourse: Function
+    handleOnSearch:() => void,
+    filterCourseList: (param: string) => void,
+    handleOpenDeleteModal: (e: React.MouseEvent) => void,
+    openModalDeleteCourse: (id: any) => void
 
 }
 
@@ -87,7 +87,6 @@ const handlers = {
     },
     handleOnSearch: (props: OwnProps) => () => {
         const { inputFilter, filterCourseList } = props;
-        debugger;
         filterCourseList(inputFilter);
     }
 }
@@ -108,11 +107,11 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
             <div className='courses__options'>
                 <FormFilter 
                 handleOnSearch={handleOnSearch}
-                handleChangeInput={handleChangeInput}
                 inputFilter={inputFilter}
                 changeInputFilter={changeInputFilter}
                 filterSizeStyle='content-courses__filter'/>
-                <button className='content-courses__button' onClick={ () => (history.push('/courses/new') ) } >Добавить курс</button>
+                <button className='content-courses__button' 
+                        onClick={ () => (history.push('/courses/new') ) } >Добавить курс</button>
             </div>
             <div className='courses__list'>
             {

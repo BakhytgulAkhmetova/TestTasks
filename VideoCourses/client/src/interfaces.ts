@@ -31,7 +31,7 @@ export interface InterfaceCourse {
     name: string,
     description: string,
     duration: string,
-    date: number,
+    date: string,
     authorList: {
        from: Array<InterfaceAuthor>,
        to: Array<InterfaceAuthor>

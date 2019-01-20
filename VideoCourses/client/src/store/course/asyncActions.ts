@@ -3,40 +3,35 @@ import uniqid from 'uniqid';
 
 import { getCourseListFetch, deleteCourseFetch, addCourseFetch, getCourseByIdFetch, editCourseFetch, getCourseListByNameFetch, getCourseListByDateFetch } from '../../api/course';
 import { InterfaceCourse } from '../../interfaces';
-import { getCourseListRequest, getCourseListSuccess,
-        deleteCourseRequest, deleteCourseSuccess,
-        getCourseListBySearchRequest, getCourseListBySearchSuccess,
-        getCourseByIdRequest, getCourseByIdSuccess,
-        editCourseRequest, editCourseSuccess,
-        addCourseRequest, addCourseSuccess } from '../course/actionCreators';
+import * as actionCreators from '../course/actionCreators';
 
 export  const getCourseList = () => {
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(getCourseListRequest());
+          dispatch(actionCreators.getCourseListRequest());
           const result = await getCourseListFetch();
-          dispatch(getCourseListSuccess(result));
+          dispatch(actionCreators.getCourseListSuccess(result));
     };
 };
 
 export  const getCourseById = (id: any) => {
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(getCourseByIdRequest());
+          dispatch(actionCreators.getCourseByIdRequest());
           const result = await getCourseByIdFetch(id);
-          dispatch(getCourseByIdSuccess(result));
+          dispatch(actionCreators.getCourseByIdSuccess(result));
     };
 };
 
 export  const deleteCourse = (id: any) => {
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(deleteCourseRequest());
-          const result = await deleteCourseFetch(id);
-          dispatch(deleteCourseSuccess(result));
+          dispatch(actionCreators.deleteCourseRequest());
+          await deleteCourseFetch(id);
+          dispatch(actionCreators.deleteCourseSuccess(id));
     };
 };
 
 export  const addCourse = (course: InterfaceCourse ) => {
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(addCourseRequest());
+          dispatch(actionCreators.addCourseRequest());
           const courseAdd = {
             name: course.name,
             id: uniqid(),
@@ -46,13 +41,12 @@ export  const addCourse = (course: InterfaceCourse ) => {
             idsAuthor: course.authorList.to.map(a => a.id)
           }
           await addCourseFetch(courseAdd);
-          dispatch(addCourseSuccess(courseAdd));
+          dispatch(actionCreators.addCourseSuccess(courseAdd));
     };
 };
 export  const editCourse = (id: any, course: InterfaceCourse ) => {
-    debugger;
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(editCourseRequest());
+          dispatch(actionCreators.editCourseRequest());
           const courseEdit = {
             name: course.name,
             description: course.description,
@@ -61,16 +55,15 @@ export  const editCourse = (id: any, course: InterfaceCourse ) => {
             idsAuthor: course.authorList.to.map(a => a.id)
           }
           await editCourseFetch(id, courseEdit);
-          dispatch(editCourseSuccess(course));
+          dispatch(actionCreators.editCourseSuccess(course));
     };
 };
 
 export  const getCourseListByName = (param: string) => {
     return async (dispatch: Redux.Dispatch<any>) => {
-          dispatch(getCourseListBySearchRequest());
-          debugger;
+          dispatch(actionCreators.getCourseListBySearchRequest());
           const resultFirst = await getCourseListByNameFetch(param);
           const result =  resultFirst.length? resultFirst: await getCourseListByDateFetch(param);
-          dispatch(getCourseListBySearchSuccess(result));
+          dispatch(actionCreators.getCourseListBySearchSuccess(result));
     };
 };

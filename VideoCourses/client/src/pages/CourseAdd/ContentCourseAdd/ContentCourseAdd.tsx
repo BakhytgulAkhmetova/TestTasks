@@ -13,6 +13,7 @@ import { addCourse } from '../../../store/course/asyncActions';
 import { InterfaceCourse } from '../../../interfaces';
 import { default as types } from '../../../validation/typesError';
 import { courseForm } from '../../../validation/validationConfig';
+import { regDateChange } from '../../../constants';
 
 import './ContentCourseAdd.scss';
 
@@ -22,9 +23,10 @@ interface OwnProps {
     addCourse: Function,
     changeCourseForm: Function,
     courseForm: InterfaceCourseFormValidated,
-    handleChangeCourseForm: any,
-    handleSaveCourse: any,
-    handleCancel: any,
+    handleChangeCourseForm: (e: React.FormEvent) => void,
+    handleChangeDateInput: (e: React.FormEvent) => void,
+    handleSaveCourse: (e: React.MouseEvent) => void,
+    handleCancel: (e: React.MouseEvent) => void,
     history: any,
     authorList: Array<InterfaceAuthor>
 }
@@ -47,7 +49,7 @@ const courseFormInitial: InterfaceCourseFormValidated = {
     name: '',
     description: '',
     duration: '',
-    date: 0,
+    date: '',
     authorList: {
         from: [],
         to: []
@@ -72,6 +74,12 @@ const handlers = {
     handleChangeCourseForm: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
         const { changeCourseForm, courseForm } = props;
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
+    },
+    handleChangeDateInput: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
+        const { changeCourseForm, courseForm } = props;
+        const value: string = event.currentTarget.value;
+        regDateChange.test(value)?
+        changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value}): null;
     },
     handleSaveCourse: (props: OwnProps) => async () => {
         const { history, addCourse, courseForm, changeCourseForm } = props;
@@ -108,15 +116,16 @@ const validator = new Validator({ types, config: courseForm });
 const ContentCourseAdd: React.SFC<OwnProps> = (props) => {
     const { contentStyle,
             handleChangeCourseForm,
+            handleChangeDateInput,
             courseForm,
             handleSaveCourse,
             handleCancel,
             changeCourseForm } = props;
-            debugger;
     const contentClass = classnames('content-course-new', contentStyle);
     return(
         <div className={contentClass}>
             <FormCourse
+            handleChangeDateInput={handleChangeDateInput}
             handleSaveCourse={handleSaveCourse}
             handleCancel={handleCancel}
             courseForm={courseForm}

@@ -7,7 +7,6 @@ import { Modal } from '../Modal';
 import { InterfaceModal } from '../../interfaces';
 import { closeModal } from '../../store/modal/actionCreators';
 
-
 interface StateProps {
     modal: InterfaceModal
 }
@@ -22,7 +21,7 @@ interface StateProps {
 
 interface OwnProps {
     modal: InterfaceModal,
-    handleCloseModal: any,
+    handleCloseModal: ()=> void,
     closeModal: Function
 }
 
@@ -42,7 +41,6 @@ const ModalProvider: React.SFC<OwnProps> = (props) => {
         <Modal
             handleCloseModal={handleCloseModal}
             modal={modal}/>
-        
     );
 };
 

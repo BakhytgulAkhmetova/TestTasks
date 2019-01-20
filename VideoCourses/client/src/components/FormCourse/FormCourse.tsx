@@ -17,25 +17,27 @@ interface InterfaceCourseFormValidated extends InterfaceCourse  {
 
 interface OwnProps {
     changeAuthorList: Function,
-    handleReplaceForward: any,
-    handleReplaceBack: any,
-    handleSaveCourse: any,
-    handleCancel: any
+    handleReplaceForward: ()=> void,
+    handleReplaceBack: ()=> void,
+    handleSaveCourse: (e: React.MouseEvent)=> void,
+    handleCancel: (e: React.MouseEvent)=> void,
+    handleChangeDateInput: (e: React.FormEvent)=> void,
     courseForm: InterfaceCourseFormValidated,
-    handleChangeCourseForm: any
+    handleChangeCourseForm: (e: React.FormEvent)=> void
     selectState: InterfaceSelectState,
     changeSelectState: Function,
     changeCourseForm: Function,
-    handleChangeSelectStateFrom: any,
-    handleChangeSelectStateTo: any,
+    handleChangeSelectStateFrom: (e: React.FormEvent)=> void,
+    handleChangeSelectStateTo: (e: React.FormEvent)=> void,
 }
 
 interface AnotherProps {
     courseForm: InterfaceCourseFormValidated,
     changeCourseForm: Function,
-    handleChangeCourseForm: any,
-    handleSaveCourse: any,
-    handleCancel: any
+    handleChangeCourseForm: (e: React.FormEvent)=> void,
+    handleChangeDateInput: (e: React.FormEvent)=> void,
+    handleSaveCourse: (e: React.MouseEvent)=> void,
+    handleCancel: (e: React.MouseEvent)=> void
 }
 
 const fields: any = {
@@ -90,6 +92,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
     const { 
         handleReplaceForward,
         handleReplaceBack,
+        handleChangeDateInput,
         handleCancel,
         handleSaveCourse,
         courseForm,
@@ -97,12 +100,11 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
         handleChangeCourseForm,
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
-        debugger;
     const duration = filterDuration(parseInt(courseForm.duration));
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
-               <label htmlFor='name'>Название:</label>
+               <label htmlFor='name'>{fields.name}:</label>
                <input 
                className='name__input'
                 id='name'
@@ -111,7 +113,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 type='text'/>
             </div> 
             <div className='form-course__description'>
-                <label htmlFor='description'>Описание:</label>
+                <label htmlFor='description'>{fields.description}:</label>
                 <textarea 
                 className='description__input'
                 value={courseForm.description}
@@ -121,15 +123,14 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
             <div className='form-course__date'>
                <label htmlFor='date'>Дата:</label>
                <input 
-                type="date"
-                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                placeholder='__.__._____'
                 className='date__input'
                 id='date'
-                onChange={handleChangeCourseForm}
+                onChange={handleChangeDateInput}
                 value={courseForm.date}/>
             </div> 
             <div className='form-course__duration'>
-                <label htmlFor='duration'>Продолжительность:</label>
+                <label htmlFor='duration'>{fields.duration}:</label>
                 <input 
                 className='duration__input'
                 id='duration'
@@ -143,7 +144,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 
             </div>
             <div className='form-course__author-list'>
-                <label htmlFor='author-list'>Список авторов:</label>
+                <label htmlFor='author-list'>{fields.authorList}:</label>
                 <div className='author-list__box'>
                     <select value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
                     <option value="" disabled>None</option>

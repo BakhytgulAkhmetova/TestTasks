@@ -8,15 +8,14 @@ interface OwnProps {
     filterSizeStyle: string,
     inputFilter: string,
     changeInputFilter: Function,
-    handleChangeInput: any,
-    handleOnSearch: any
+    handleChangeInput: (e: React.FormEvent)=> void,
+    handleOnSearch: (e: React.MouseEvent)=> void
 }
 interface AnotherProps {
     filterSizeStyle: string,
     inputFilter: string,
     changeInputFilter: Function,
-    handleChangeInput: any,
-    handleOnSearch: any
+    handleOnSearch: (e: React.MouseEvent)=> void
 }
 
 const handlers = {

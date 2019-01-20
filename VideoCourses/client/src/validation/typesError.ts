@@ -1,4 +1,4 @@
-import { regNumber } from './constants';
+import { regNumber, regDate } from './constants';
 
 export default {
     isNotEmpty: {
@@ -12,5 +12,11 @@ export default {
             return regNumber.test(value);
         },
         instructions: 'Поле для ввода числа. '
+    },
+    isCorrectDate: {
+        validate: (value: any) => {
+            return regDate.test(value);
+        },
+        instructions: 'Неверная дата. '
     }
 };

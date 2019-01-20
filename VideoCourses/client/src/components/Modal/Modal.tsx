@@ -1,5 +1,4 @@
 import React from 'react';
-import { compose, withHandlers } from 'recompose';
 import classnames from 'classnames';
 
 import { InterfaceModal } from '../../interfaces';
@@ -17,7 +16,8 @@ const Modal: React.SFC<OwnProps> = (props) => {
     return(
         <div className={ modalClass }>
             <div className={modal.styleContent}>
-            <span onClick={handleCloseModal} className="close">&times;</span>
+            <span onClick={handleCloseModal}
+                  className="close">&times;</span>
             <div>{modal.header}</div>
             <div>{modal.content}</div>
             </div>

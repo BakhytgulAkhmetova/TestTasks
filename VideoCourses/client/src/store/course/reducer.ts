@@ -68,7 +68,7 @@ const course = (state = initialState, action: InterfaceAction) => {
 
         case types.DELETE_COURSE_SUCCESS:
         const arr = (state.courseList as any[]).slice(0);
-        const i = arr.findIndex(el=> el.id === action.payload.id);
+        const i = arr.findIndex(el=> el.id === action.payload);
         arr.splice(i, 1);
             return {
                 ...state,
