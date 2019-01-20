@@ -1,7 +1,7 @@
 import { InterfaceAction } from '../../interfaces';
 import * as types from './actions';
 
-const authentication = (state = { isLoading: false, login: '' }, action: InterfaceAction) => {
+const authentication = (state = { isLoading: false }, action: InterfaceAction) => {
     switch (action.type) {
         case types.LOG_IN_REQUEST:
             return {
@@ -12,8 +12,7 @@ const authentication = (state = { isLoading: false, login: '' }, action: Interfa
         case types.LOG_IN_SUCCESS:
             return {
                 ...state,
-                isLoading: !state.isLoading,
-                login: action.payload
+                isLoading: !state.isLoading
             };
         default:
             return state;

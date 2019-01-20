@@ -4,9 +4,6 @@ export const loginRequest = () => {
     return { type: actions.LOG_IN_REQUEST };
 };
 
-export const loginSuccess = (payload: any) => {
-    return { 
-        type: actions.LOG_IN_SUCCESS,
-        payload
-     };
+export const loginSuccess = () => {
+    return { type: actions.LOG_IN_SUCCESS };
 };

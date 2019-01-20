@@ -15,6 +15,14 @@ $form-login-height: 200px;
     width: 60%;
 }
 
+.error-input {
+    border: 1px solid #940707;
+}
+
+.error {
+    color: #940707;
+}
+
 .form-login__control-pas > input{
     margin:0 20px 0 10px;
     height: 22px;

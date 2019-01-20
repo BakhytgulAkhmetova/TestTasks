@@ -2,7 +2,7 @@ import React from 'react';
 import { compose, withState, withHandlers } from 'recompose';
 
 import { InterfaceCourse } from '../../interfaces';
-import { filterDuration } from '../../utils';
+import { filterDuration } from '../../utils/filterDuration';
 
 import './FormCourse.scss';
 

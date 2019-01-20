@@ -86,14 +86,14 @@
     },
     {
       "name": "ввв",
-      "id": "jr3k5lj5",
       "description": "ывывыв",
       "date": 0,
       "duration": "333",
       "idsAuthor": [
         2,
-        5
-      ]
+        4
+      ],
+      "id": "jr3k5lj5"
     }
   ],
   "users": [

@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import { InterfaceCourse } from '../../../interfaces';
-import { filterDuration } from '../../../utils';
+import { filterDuration } from '../../../utils/filterDuration';
 
 import './CourseItem.scss';
 

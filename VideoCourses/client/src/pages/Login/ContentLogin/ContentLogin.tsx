@@ -6,17 +6,32 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { FormLogin } from '../FormLogin';
-import { InterfaceLoginForm } from '../../../interfaces';
 import { login } from '../../../store/authentication/asyncActions';
 import { loginSuccess } from '../../../store/authentication/actionCreators';
+import { Validator, } from '../../../validation/validator';
+import { default as types } from '../../../validation/typesError';
+import { loginForm } from '../../../validation/validationConfig';
 
 import './ContentLogin.scss';
 
+interface InterfaceLoginFormValidated {
+    login: {
+        hasErrors: boolean,
+        value: ''
+    },
+    password: {
+        hasErrors: boolean,
+        value: ''
+    },
+    hasErrors: boolean,
+    incorrectData: boolean
+}
+
 interface OwnProps {
     contentStyle: string,
-    loginForm: InterfaceLoginForm,
-    handleChangeLogin: ChangeEventHandler,
-    handleChangePassword: ChangeEventHandler,
+    loginForm: InterfaceLoginFormValidated,
+    handleChangeInputForm: ChangeEventHandler,
+    handleBlurFieldForm:(e:React.FocusEvent<HTMLInputElement>) => void,
     handleLogIn: any,
     propsContent: any,
     onLogIn: Function ,
@@ -25,43 +40,78 @@ interface OwnProps {
 }
      
 interface DispatchProps {
-    onLogIn: (loginForm: InterfaceLoginForm) => void
+    onLogIn: () => void
 }
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
-    onLogIn: async (loginForm: InterfaceLoginForm) => { 
-       const json: any = await dispatch(login(loginForm));
+    onLogIn: async () => { 
+        debugger;
+       const { propsContent, history, loginForm, changeLoginForm } = ownProps;
+       const form = {
+           login: loginForm.login.value,
+           password: loginForm.password.value
+
+        };
+       const json: any = await dispatch(login(form));
        if(json['token']) {
         await localStorage.setItem('token', json['token']);
-        ownProps.propsContent.handleChangeLayoutLogin(loginForm.login);
+        dispatch(loginSuccess());
+        propsContent.handleChangeLayoutLogin(form.login);
+        history.push('/courses');
         }
-        ownProps.history.push('/courses');
+        else {
+            changeLoginForm({
+                ...loginForm,
+                password: { value: '', hasErrors: true },
+                hasErrors: true,
+                incorrectData: true
+            });
+        }
     }
 });
 
 const handlers = {
-    handleChangeLogin: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
-        props.changeLoginForm({...props.loginForm, login: event.currentTarget.value});
+    handleChangeInputForm: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
+        const { loginForm, changeLoginForm } = props;
+        const field = event.currentTarget.name;
+        const value = event.currentTarget.value;
+        changeLoginForm({ ...loginForm, [field]: { value, hasErrors: false }, incorrectData: false });
 
     },
-    handleChangePassword: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
-        props.changeLoginForm({...props.loginForm, password: event.currentTarget.value});
+    handleBlurFieldForm: (props: OwnProps) => (e:React.FocusEvent<HTMLInputElement>) => {
+        const { loginForm, changeLoginForm } = props;
+        const field = e.currentTarget.name;
+        const value = e.currentTarget.value;
+        const hasErrors = validate(field, value).errors.length !== 0;
 
+        changeLoginForm({ ...loginForm, [field]: { value, hasErrors }, hasErrors });
     },
     handleLogIn: (props: OwnProps) => () => {
-        props.onLogIn(props.loginForm);
+        props.onLogIn();
     }
 }
 
+const validator = new Validator({ types, config: loginForm });
+
+const validate = (field: string, input: string) => {
+    validator.cleanListErrors();
+
+    validator.validate({ [field]: { value: input } });
+
+    return { errors: validator.listErrors[0].msgs, value: input || '' };
+};
+
 const ContentLogin: React.SFC<OwnProps> = (props) => {
-    const { contentStyle, loginForm, handleChangeLogin, handleChangePassword, handleLogIn } = props;
+    const { contentStyle, loginForm,
+        handleBlurFieldForm,
+        handleChangeInputForm, handleLogIn } = props;
     const contentClass = classnames('content-login', contentStyle);
     return(
         <div className={contentClass}>
             <FormLogin 
+            handleBlurFieldForm={handleBlurFieldForm}
             handleLogIn={handleLogIn}
-            handleChangeLogin={handleChangeLogin}
-            handleChangePassword={handleChangePassword}
+            handleChangeInputForm={handleChangeInputForm}
             loginForm={loginForm}/>
         </div>
     );
@@ -69,10 +119,12 @@ const ContentLogin: React.SFC<OwnProps> = (props) => {
 
 export default compose<OwnProps, {}> (
     withRouter,
-    connect(null, mapDispatchToProps),
     withState('loginForm', 'changeLoginForm', {
-        login: '',
-        password: ''
+        login: { value: '', hasErrors: false },
+        password: { value: '', hasErrors: false },
+        hasErrors: false,
+        incorrectData: false
     }),
+    connect(null, mapDispatchToProps),
     withHandlers(handlers)
 )(ContentLogin);

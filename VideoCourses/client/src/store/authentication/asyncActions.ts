@@ -8,10 +8,5 @@ export  const login = (loginForm: InterfaceLoginForm) => {
     return async (dispatch: Redux.Dispatch<any>) => {
           dispatch(loginRequest());
           return await authenticationFetch(loginForm);
-        //   if(json['token']) {
-        //       localStorage.setItem('login', loginForm.login);
-        //       localStorage.setItem('token', json['token']);
-        //       dispatch(loginSuccess(loginForm.login));
-        //   }
     };
 };

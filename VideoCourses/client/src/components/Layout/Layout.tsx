@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { InterfaceLayoutHeader } from '../../interfaces';
 
 import './Layout.scss';
-import logo from '../../images/logo.svg';
+import logo from '../../assert/logo.svg';
 
 const Layout = ( props: InterfaceLayoutHeader) => {
 let { Content, HeaderParticular,
