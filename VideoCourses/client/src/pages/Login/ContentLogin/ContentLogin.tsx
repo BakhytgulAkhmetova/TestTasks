@@ -45,7 +45,6 @@ interface DispatchProps {
    
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps => ({
     onLogIn: async () => { 
-        debugger;
        const { propsContent, history, loginForm, changeLoginForm } = ownProps;
        const form = {
            login: loginForm.login.value,

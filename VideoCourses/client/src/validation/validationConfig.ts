@@ -1,12 +1,10 @@
 
-export const regFormCustomer = {
-    firstName: ['isNotEmpty'],
-    lastName: ['isNotEmpty'],
-    address:['isNotEmpty'],
-    phone: ['isNotEmpty', 'isPhoneNumber'],
-    login: ['isNotEmpty', 'isEmail'],
-    password: ['isNotEmpty'],
-    isDisabled: []
+export const courseForm = {
+    name: ['isNotEmpty'],
+    description: ['isNotEmpty'],
+    date:['isNotEmpty'],
+    duration: ['isNotEmpty', 'isNumber'],
+    authorList: ['isNotEmpty']
 };
 
 export const loginForm = {

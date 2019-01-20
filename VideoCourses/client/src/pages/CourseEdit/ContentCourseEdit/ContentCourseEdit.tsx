@@ -18,7 +18,7 @@ interface OwnProps {
     getAuthors: Function,
     getCourseById: Function,
     changeCourseForm: Function,
-    courseForm: InterfaceCourse,
+    courseForm: InterfaceCourseFormValidated,
     handleChangeCourseForm: any,
     handleSaveCourse: any,
     handleCancel: any,
@@ -32,6 +32,11 @@ interface StateProps {
     authorList: Array<InterfaceAuthor>,
     courseForEdit: InterfaceCourse
 }
+
+interface InterfaceCourseFormValidated extends InterfaceCourse  {
+    errors: Array<any>
+}
+
 
 interface DispatchProps {
     getAuthors: () => void,

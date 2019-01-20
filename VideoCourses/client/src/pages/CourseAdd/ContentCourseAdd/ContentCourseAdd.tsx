@@ -6,10 +6,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import {FormCourse} from '../../../components/FormCourse';
+import { Validator, } from '../../../validation/validator';
 import { InterfaceAuthor } from '../../../interfaces';
 import { getAuthorList } from '../../../store/author/asyncActions';
 import { addCourse } from '../../../store/course/asyncActions';
 import { InterfaceCourse } from '../../../interfaces';
+import { default as types } from '../../../validation/typesError';
+import { courseForm } from '../../../validation/validationConfig';
 
 import './ContentCourseAdd.scss';
 
@@ -18,12 +21,16 @@ interface OwnProps {
     getAuthors: Function,
     addCourse: Function,
     changeCourseForm: Function,
-    courseForm: InterfaceCourse,
+    courseForm: InterfaceCourseFormValidated,
     handleChangeCourseForm: any,
     handleSaveCourse: any,
     handleCancel: any,
     history: any,
     authorList: Array<InterfaceAuthor>
+}
+
+interface InterfaceCourseFormValidated extends InterfaceCourse  {
+    errors: Array<any>
 }
 
 interface StateProps {
@@ -35,7 +42,7 @@ interface DispatchProps {
     addCourse: (course: InterfaceCourse) => void
 }
 
-const courseFormInitial: InterfaceCourse = {
+const courseFormInitial: InterfaceCourseFormValidated = {
     id: -1,
     name: '',
     description: '',
@@ -44,7 +51,8 @@ const courseFormInitial: InterfaceCourse = {
     authorList: {
         from: [],
         to: []
-    }
+    },
+    errors: []
 }
 
 const mapStateToProps = (state: any): StateProps => ({
@@ -66,9 +74,29 @@ const handlers = {
         changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
     },
     handleSaveCourse: (props: OwnProps) => async () => {
-        const { history, addCourse, courseForm } = props;
-        await addCourse(courseForm);
-        history.push('/courses');
+        const { history, addCourse, courseForm, changeCourseForm } = props;
+        const courseV = {
+            name: { value: courseForm.name },
+            description: { value: courseForm.description},
+            date: { value: courseForm.date},
+            duration: { value: courseForm.duration},
+            authorList: { value: courseForm.authorList.to} 
+        };
+        validator.cleanListErrors();
+        const hasErrors = validator.validate(courseV);
+        const errorList = validator.listErrors; 
+        if(hasErrors) {
+            changeCourseForm({
+                ...courseForm,
+                errors: errorList
+            })
+        }
+        else {
+             await addCourse(courseForm);
+             history.push('/courses');
+
+        }
+        console.log(validator.listErrors);
     },
     handleCancel: (props: OwnProps) => () => {
         const { history } = props;
@@ -76,6 +104,7 @@ const handlers = {
     }
 }
 
+const validator = new Validator({ types, config: courseForm });
 
 const ContentCourseAdd: React.SFC<OwnProps> = (props) => {
     const { contentStyle,
@@ -84,6 +113,7 @@ const ContentCourseAdd: React.SFC<OwnProps> = (props) => {
             handleSaveCourse,
             handleCancel,
             changeCourseForm } = props;
+            debugger;
     const contentClass = classnames('content-course-new', contentStyle);
     return(
         <div className={contentClass}>
@@ -107,7 +137,7 @@ export default compose<OwnProps, {}>(
         componentDidUpdate(prevProps) {
             if(prevProps.authorList!==this.props.authorList) {
             const { authorList, changeCourseForm, courseForm } = this.props;
-            changeCourseForm({ ...courseForm, authorList:{ from: authorList, to: []} });
+            changeCourseForm({ ...courseForm, authorList: { from: authorList, to: []}});
             }
         },
         componentDidMount() {

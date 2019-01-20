@@ -29,6 +29,7 @@ export class Validator implements InterfaceVlidator {
     validate = (data: any) => {
         for (const i in data) {
             if (data.hasOwnProperty(i)) {
+                debugger;
                 this.messages = [];
                 const typesForOne = this.config[i];
 
@@ -47,7 +48,7 @@ export class Validator implements InterfaceVlidator {
                     const success = checker.validate(data[i].value);
 
                     if (!success) {
-                        const msg = `Invalid value. ${checker.instructions}`;
+                        const msg = `${checker.instructions}`;
 
                         this.messages.push(msg);
                     }

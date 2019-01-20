@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose, withState, withHandlers } from 'recompose';
 
-import { InterfaceCourse } from '../../interfaces';
+import { InterfaceCourse, InterfaceAuthor } from '../../interfaces';
 import { filterDuration } from '../../utils/filterDuration';
 
 import './FormCourse.scss';
@@ -11,13 +11,17 @@ interface InterfaceSelectState {
     valueTo: string
 }
 
+interface InterfaceCourseFormValidated extends InterfaceCourse  {
+    errors: Array<any>
+}
+
 interface OwnProps {
     changeAuthorList: Function,
     handleReplaceForward: any,
     handleReplaceBack: any,
     handleSaveCourse: any,
     handleCancel: any
-    courseForm: InterfaceCourse,
+    courseForm: InterfaceCourseFormValidated,
     handleChangeCourseForm: any
     selectState: InterfaceSelectState,
     changeSelectState: Function,
@@ -27,12 +31,20 @@ interface OwnProps {
 }
 
 interface AnotherProps {
-    courseForm: InterfaceCourse,
+    courseForm: InterfaceCourseFormValidated,
     changeCourseForm: Function,
     handleChangeCourseForm: any,
     handleSaveCourse: any,
     handleCancel: any
 }
+
+const fields: any = {
+     name: 'Название',
+     description: 'Описание',
+     date: 'Дата',
+     duration: 'Продолжительность',
+     authorList: 'Список авторов'
+};
 
 const handlers = {
     handleChangeSelectStateFrom: (props: OwnProps) => (event: React.FormEvent<HTMLSelectElement>) => {
@@ -54,7 +66,7 @@ const handlers = {
                 let arrTo = [ ...courseForm.authorList.to ];
                 arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
                 arrFrom.splice(indexDeleteFrom, 1);
-            changeCourseForm({ ...courseForm, authorList: { from: arrFrom, to: arrTo }});
+                changeCourseForm({ ...courseForm, authorList: { from: arrFrom, to: arrTo }});
             changeSelectState({...selectState, valueFrom: ""});
         }
     },
@@ -67,7 +79,7 @@ const handlers = {
                 let arrTo = [ ...courseForm.authorList.from ];
                 arrTo = arrTo.concat(arrFrom[indexDeleteFrom]);
                 arrFrom.splice(indexDeleteFrom, 1);
-            changeCourseForm({ ...courseForm, authorList: { from: arrTo, to: arrFrom }});
+                changeCourseForm({ ...courseForm, authorList: { from: arrTo, to: arrFrom }});
             changeSelectState({...selectState, valueTo: ""});
         }
 
@@ -156,6 +168,18 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     </select>
                 </div>
             </div>
+            {
+                courseForm.errors.length?
+                <div className='error-box'>
+                    {
+                         courseForm.errors.map((er) => {
+                            const f = er.prop;
+                          return  er.msgs.length ?<p>{ fields[f] }:
+                           <span className='error'>{er.msgs}</span> </p>: null
+                         })
+                    }
+                </div>: null
+            }
             <div className='form-course__button-group'>
                <button type='button'onClick={handleSaveCourse} >Сохранить</button>             
                <button type='button' onClick={handleCancel} >Отмена</button>      
