@@ -174,9 +174,9 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 courseForm.errors.length?
                 <div className='error-box'>
                     {
-                         courseForm.errors.map((er) => {
+                         courseForm.errors.map((er, index) => {
                             const f = er.prop;
-                          return  er.msgs.length ?<p>{ fields[f] }:
+                          return  er.msgs.length ?<p key={er.prop + index}>{ fields[f] }:
                            <span className='error'>{er.msgs}</span> </p>: null
                          })
                     }
