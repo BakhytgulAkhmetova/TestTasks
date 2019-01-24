@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import classnames from 'classnames';
 import { compose, withHandlers  } from 'recompose';
 
@@ -9,13 +9,13 @@ interface OwnProps {
     inputFilter: string,
     changeInputFilter: Function,
     handleChangeInput: (e: React.FormEvent)=> void,
-    handleOnSearch: (e: React.MouseEvent)=> void
+    handleOnSearch: (e: React.MouseEvent | React.FormEvent )=> void
 }
 interface AnotherProps {
     filterSizeStyle: string,
     inputFilter: string,
     changeInputFilter: Function,
-    handleOnSearch: (e: React.MouseEvent)=> void
+    handleOnSearch: (e: React.MouseEvent | React.FormEvent )=> void
 }
 
 const handlers = {
@@ -30,14 +30,15 @@ const FormFilter: React.SFC<OwnProps> = (props) => {
     const filterClass = classnames('filter-courses', filterSizeStyle);
 
     return(
-        <form className={ filterClass}>  
+        <form  className={ filterClass}>  
                <input onChange={handleChangeInput}
                     value={inputFilter} 
                     className='filter-courses__input' 
                     type='text' 
                     placeholder='фрагмент имени или дата'/>
                <button 
-                    type='button'
+                    type='submit'
+                    onSubmit={handleOnSearch}
                     onClick={handleOnSearch}
                     className='form-filter__button'>Найти</button>
         </form>

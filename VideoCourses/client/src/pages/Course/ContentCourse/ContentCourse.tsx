@@ -53,7 +53,7 @@ const mapStateToProps = (state: any): StateProps => ({
     cour:state.course.courseForm
 });
    
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, props:OwnProps): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
     getCourseList: () => {
         dispatch(getCourseList());
     },
@@ -85,7 +85,8 @@ const handlers = {
         const { openModalDeleteCourse } = props;
         openModalDeleteCourse(e.currentTarget.id);
     },
-    handleOnSearch: (props: OwnProps) => () => {
+    handleOnSearch: (props: OwnProps) => (e: React.MouseEvent<HTMLElement>| React.FormEvent) => {
+        e.preventDefault();
         const { inputFilter, filterCourseList } = props;
         filterCourseList(inputFilter);
     }
@@ -97,7 +98,6 @@ const ContentCourse: React.SFC<OwnProps> = (props) => {
             history, authorList,
             inputFilter,
             changeInputFilter,
-            handleChangeInput,
             handleOnSearch,
             handleOpenDeleteModal,
             handleOpenEditPage } = props;

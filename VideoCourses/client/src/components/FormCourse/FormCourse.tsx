@@ -101,6 +101,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
     const duration = filterDuration(parseInt(courseForm.duration));
+    debugger;
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
@@ -146,8 +147,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
             <div className='form-course__author-list'>
                 <label htmlFor='author-list'>{fields.authorList}:</label>
                 <div className='author-list__box'>
-                    <select value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
-                    <option value="" disabled>None</option>
+                    <select multiple value={selectState.valueFrom} onChange={handleChangeSelectStateFrom} size={6}>
                     {
                         courseForm.authorList.from.map(author => (<option
                             key={author.id + author.lastName} 
@@ -160,8 +160,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                     <button type='button' onClick={handleReplaceBack}>&#x25C0;</button>
                 </div>
                 <div className='author-list__box'>
-                    <select value={selectState.valueTo} onChange={handleChangeSelectStateTo} size={6}>
-                    <option value="" disabled>None</option>
+                    <select multiple value={selectState.valueTo} onChange={handleChangeSelectStateTo} size={6}>
                     {
                         courseForm.authorList.to.map(author => (<option
                             key={author.id + author.lastName} 
