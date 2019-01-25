@@ -2,18 +2,16 @@ $common-width: 98%;
 $footer-caption-width: 300px;
 
 .layout__header {
-    height: 140px;
     width: $common-width;
-    margin: 10px auto;
+    margin: auto;
     border: 1px solid black;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 .layout__footer {
-    height: 50px;
     width: $common-width;
-    margin: 10px auto;
+    margin: auto;
     border: 1px solid black;
 }
 
@@ -28,10 +26,6 @@ $footer-caption-width: 300px;
 
 .layout__header--logo {
     width: 100%;
-}
-
-.layout__header--caption {
-    height: 50px;
 }
 
 .layout__header-particular {

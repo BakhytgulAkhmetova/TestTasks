@@ -3,7 +3,7 @@ import * as types from './actions';
 
 import { default as initialState } from './initialState';
 
-const author = (state = initialState, action: InterfaceAction) => {
+export const author = (state = initialState, action: InterfaceAction) => {
     switch (action.type) {
         case types.GET_AUTHOR_LIST_REQUEST:
             return {
@@ -21,5 +21,3 @@ const author = (state = initialState, action: InterfaceAction) => {
             return state;
     }
 };
-
-export default author;

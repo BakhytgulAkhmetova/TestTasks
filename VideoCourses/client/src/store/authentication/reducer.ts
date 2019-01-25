@@ -1,7 +1,7 @@
 import { InterfaceAction } from '../../interfaces';
 import * as types from './actions';
 
-const authentication = (state = { isLoading: false }, action: InterfaceAction) => {
+export const authentication = (state = { isLoading: false }, action: InterfaceAction) => {
     switch (action.type) {
         case types.LOG_IN_REQUEST:
             return {
@@ -18,5 +18,3 @@ const authentication = (state = { isLoading: false }, action: InterfaceAction) =
             return state;
     }
 };
-
-export default authentication;

@@ -52,7 +52,13 @@ class App extends React.Component<{}, State> {
                     Content={ContentCourseAdd}
                     propsHeader={{login: this.state.login,
                     handleLogOff: this.handleLogOff.bind(this),
-                    pathList:['Курсы', 'Новый']}}
+                    pathList: [{
+                     name: 'Курсы',
+                     path: '/courses'
+                    }, {
+                      name: 'Новый',
+                      path: '/courses/new'
+                    }]}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-course-form' 
@@ -61,7 +67,13 @@ class App extends React.Component<{}, State> {
                     propsContent={{handleChangeLayoutCourseName: this.handleChangeLayoutCourseName.bind(this)}}
                     propsHeader={{login: this.state.login,
                     handleLogOff: this.handleLogOff.bind(this),
-                    pathList:['Курсы', 'Курс ' + this.state.courseName]}}
+                    pathList: [{
+                      name: 'Курсы',
+                      path: '/courses'
+                     }, {
+                       name: 'Курс' + ' ' + this.state.courseName,
+                       path: '/courses/:id'
+                     }]}}
                     HeaderParticular={HeaderPrivate}/>
                 <Layout 
                     contentStyle='layout__content-courses' 
@@ -69,8 +81,10 @@ class App extends React.Component<{}, State> {
                     Content={ContentCourse} 
                     propsHeader={{login: this.state.login,
                     handleLogOff: this.handleLogOff.bind(this),
-                    pathList:['Курсы']
-                    }}
+                    pathList: [{
+                      name: 'Курсы',
+                      path: '/courses'
+                     }]}}
                     HeaderParticular={HeaderPrivate}/>
                 <Route path='/' render={() => (<Redirect  from='/' to='/courses'/>)}/>
               </Switch>

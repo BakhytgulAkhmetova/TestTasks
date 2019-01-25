@@ -3,7 +3,7 @@ import * as types from './actions';
 
 import { InterfaceAction } from '../../interfaces';
 
-const modal = (state = initialStateModal, action: InterfaceAction) => {
+export const modal = (state = initialStateModal, action: InterfaceAction) => {
     switch (action.type) {
         case types.OPEN_MODAL:
             return {
@@ -34,5 +34,3 @@ const modal = (state = initialStateModal, action: InterfaceAction) => {
             return state;
     }
 };
-
-export default modal;

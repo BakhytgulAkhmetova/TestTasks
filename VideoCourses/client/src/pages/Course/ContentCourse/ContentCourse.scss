@@ -4,10 +4,11 @@
     @extend %flex-container;
     flex-direction: row;
     align-items: flex-start;
+    height: 6%;
+    margin-top: 4px;
 }
 .courses__list{
-    margin-top: 20px;
-    height: 90%;
+    height: 91%;
     overflow-y: auto;
     overflow-x: unset;
 }

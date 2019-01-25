@@ -3,7 +3,7 @@ import * as types from './actions';
 
 import { default as initialState } from './initialState';
 
-const course = (state = initialState, action: InterfaceAction) => {
+export const course = (state = initialState, action: InterfaceAction) => {
     switch (action.type) {
         case types.GET_COURSE_LIST_REQUEST:
             return {
@@ -94,5 +94,3 @@ const course = (state = initialState, action: InterfaceAction) => {
             return state;
     }
 };
-
-export default course;
