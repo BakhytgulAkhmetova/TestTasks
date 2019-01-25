@@ -32,10 +32,10 @@ class App extends React.Component<{}, State> {
     this.setState({...this.state, login: localStorage.getItem('login')} as State);
   }
   handleChangeLayoutCourseName (name: string ) {
+    debugger;
     this.setState({ ...this.state, courseName: name } as State);
   }
   render() {
-    const pathArray = window.location.pathname.split('/');
     return (
       <Provider store={store}>
         <div className="app">

@@ -7,7 +7,11 @@ import { Breadcrumb } from '../Breadcrumb';
 import './HeaderPrivate.scss';
 
 interface OwnProps {
-    propsHeader: any,
+    propsHeader: {
+        pathList: Array<{ name: string, path: string }>,
+        login: string,
+        handleLogOff: () => void
+    },
     headerStyle: string
 }
 

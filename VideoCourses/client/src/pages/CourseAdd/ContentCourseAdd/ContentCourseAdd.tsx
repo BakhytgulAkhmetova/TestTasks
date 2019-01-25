@@ -48,7 +48,7 @@ const courseFormInitial: InterfaceCourseFormValidated = {
     id: -1,
     name: '',
     description: '',
-    duration: '',
+    duration: 0,
     date: '',
     authorList: {
         from: [],

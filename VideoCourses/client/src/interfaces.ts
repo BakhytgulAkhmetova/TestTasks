@@ -3,15 +3,6 @@ export interface InterfaceAction {
     payload?:any
 }
 
-export interface InterfaceLayoutHeader {
-    Content: any,
-    HeaderParticular?: any,
-    path: string,
-    contentStyle: string,
-    propsHeader?: any,
-    propsContent?: any
-}
-
 export interface InterfaceLoginForm {
     login: string,
     password: string
@@ -30,7 +21,7 @@ export interface InterfaceCourse {
     id: any,
     name: string,
     description: string,
-    duration: string,
+    duration: number,
     date: string,
     authorList: {
        from: Array<InterfaceAuthor>,

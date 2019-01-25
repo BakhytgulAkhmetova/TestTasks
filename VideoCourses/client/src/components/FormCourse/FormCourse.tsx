@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose, withState, withHandlers } from 'recompose';
 
-import { InterfaceCourse, InterfaceAuthor } from '../../interfaces';
+import { InterfaceCourse } from '../../interfaces';
 import { filterDuration } from '../../utils/filterDuration';
 
 import './FormCourse.scss';
@@ -100,8 +100,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
         handleChangeCourseForm,
         handleChangeSelectStateFrom,
         handleChangeSelectStateTo } = props;
-    const duration = filterDuration(parseInt(courseForm.duration));
-    debugger;
+    const duration = filterDuration(courseForm.duration);
     return(
         <form className='form-course'>  
             <div className='form-course__name'>
@@ -109,6 +108,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                <input 
                className='name__input'
                 id='name'
+                name='name'
                 onChange={handleChangeCourseForm}
                 value={courseForm.name} 
                 type='text'/>
@@ -119,6 +119,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 className='description__input'
                 value={courseForm.description}
                 onChange={handleChangeCourseForm}
+                name='description'
                 id='description'></textarea>
             </div>
             <div className='form-course__date'>
@@ -127,6 +128,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 placeholder='__.__._____'
                 className='date__input'
                 id='date'
+                name='date'
                 onChange={handleChangeDateInput}
                 value={courseForm.date}/>
             </div> 
@@ -135,6 +137,7 @@ const FormCourse: React.SFC<OwnProps> = (props) => {
                 <input 
                 className='duration__input'
                 id='duration'
+                name='duration'
                 onChange={handleChangeCourseForm}
                 value={courseForm.duration}
                 type='text'/>

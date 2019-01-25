@@ -52,7 +52,7 @@ const courseFormInitial: InterfaceCourseFormValidated = {
     id: -1,
     name: '',
     description: '',
-    duration: '',
+    duration: 0,
     date: '',
     authorList: {
         from: [],
@@ -81,15 +81,19 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): DispatchProps => ({
 const handlers = {
     handleChangeCourseForm: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
         const { changeCourseForm, courseForm, propsContent } = props;
-        changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value});
-        event.currentTarget.id==='name'?
-        propsContent.handleChangeLayoutCourseName(event.currentTarget.value): null;
+        if(event.currentTarget.name === 'name') {
+            changeCourseForm({...courseForm, [event.currentTarget.name]: event.currentTarget.value});
+             propsContent.handleChangeLayoutCourseName(event.currentTarget.value);
+        }
+        else {
+            changeCourseForm({...courseForm, [event.currentTarget.name]: event.currentTarget.value});
+        }
     },
     handleChangeDateInput: (props: OwnProps) => (event: React.FormEvent<HTMLInputElement>) => {
         const { changeCourseForm, courseForm } = props;
         const value: string = event.currentTarget.value;
         regDateChange.test(value)?
-        changeCourseForm({...courseForm, [event.currentTarget.id]: event.currentTarget.value}): null;
+        changeCourseForm({...courseForm, [event.currentTarget.name]: event.currentTarget.value}): null;
     },
     handleSaveCourse: (props: OwnProps) => async () => {
         const { history, courseForm, editCourse, changeCourseForm } = props;

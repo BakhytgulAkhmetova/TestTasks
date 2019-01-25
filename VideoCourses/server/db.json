@@ -91,6 +91,17 @@
       "idsAuthor": [
         1
       ]
+    },
+    {
+      "name": "fsdff",
+      "id": "jrbzjsen",
+      "description": "sdfsdfs",
+      "date": "12.12.1900",
+      "duration": "23",
+      "idsAuthor": [
+        2,
+        5
+      ]
     }
   ],
   "users": [

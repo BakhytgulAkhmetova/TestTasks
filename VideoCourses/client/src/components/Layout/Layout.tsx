@@ -1,10 +1,17 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { InterfaceLayoutHeader } from '../../interfaces';
-
 import './Layout.scss';
 import logo from '../../assert/logo.svg';
+
+interface InterfaceLayoutHeader {
+    Content: any,
+    HeaderParticular?: any,
+    path: string,
+    contentStyle: string,
+    propsHeader?: any,
+    propsContent?: any
+}
 
 const Layout = ( props: InterfaceLayoutHeader) => {
 let { Content, HeaderParticular,
