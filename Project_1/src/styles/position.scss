@@ -1,0 +1,37 @@
+.position {
+    height: 100%;
+}
+
+.position__header {
+    height: 10%;
+}
+
+.position__content {
+    height: 80%;
+    position: relative;
+}
+
+.pos-content__left {
+    height: 100%;
+    width: 30%;
+    left: 0;
+    position: absolute;
+}
+
+.pos-content__center {
+    height: 100%;
+    position: absolute;
+    width: 40%;
+    margin: 0 30%;
+}
+
+.pos-content__right {
+    height: 100%;
+    width: 30%;
+    right: 0;
+    position: absolute;
+}
+
+.position__footer {
+    height: 10%;
+}

@@ -1,0 +1,93 @@
+.float {
+    height: 100%;
+}
+
+.float__header {
+    height: 15%;
+}
+
+.float__content {
+    height: 70%;
+    overflow: auto;
+}
+
+.float__content::after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.float__footer {
+    height: 15%;
+}
+
+.content__left {
+    float: left;
+    width: 30%;
+    height: 100%;
+    overflow: inherit;
+}
+
+.content__center {
+    margin: 0 30%;
+    height: 100%;
+    overflow: inherit;
+}
+
+.content__right {
+    float: right;
+    width: 30%;
+    height: 100%;
+    overflow: inherit;
+}
+
+
+//float elements
+
+$colors: 
+#c75e67
+#a4dcf7
+#d20c2c
+#0e3b45
+#404a59
+#e76654
+#1b8a9f;
+
+.float-elements {
+    height: 100%;
+}
+
+@for $i from 1 to 6 {
+    .elem_#{$i} {
+        background-color: nth($list: $colors , $n: $i);
+        width: 30%;
+        height: 200px;
+        margin: 20px;
+        float: left;
+    }
+}
+
+.inside-float {
+    margin: 0;
+    background-color: green;
+    height: 100%;
+    width: 20%;
+}
+
+.elem_opacity {
+    background-color: nth($list: $colors , $n: 7);
+    position: absolute;
+    width: 80%;
+    height: 200px;
+    margin: 20px;
+    opacity: 0.8;
+}
+
+.elem_z-index {
+    background-color: blueviolet;
+    position: absolute;
+    width: 80%;
+    height: 200px;
+    margin: 20px;
+    z-index: 1;
+}
