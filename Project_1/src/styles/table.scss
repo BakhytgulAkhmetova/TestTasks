@@ -1,0 +1,35 @@
+.table {
+    display: table;
+    width: 100%;
+    background-color: #dfbdbd;
+}
+
+.table__header {
+    display: table-row;
+}
+
+.table__content {
+    display: table-row;
+}
+
+.table__content__cell {
+    display: table-cell;
+    border: 1px solid #8b8a8a;
+    height: 400px;
+}
+
+.table__footer {
+    display: table-row;
+}
+
+.color {
+    &_1 {
+        background-color: #a8d19c;
+    }
+    &_2 {
+        background-color: #9cb7d1;;
+    }
+    &_3 {
+        background-color: #d19cbd;
+    }
+}
