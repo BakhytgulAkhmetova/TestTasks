@@ -15,13 +15,13 @@ module.exports = {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['@babel/preset-env']
-                  }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
                 }
-              },
-              {
+            },
+            {
                 test: /\.scss$/,
                 use: [{
                     loader: "style-loader"
@@ -35,13 +35,13 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-                template: path.join(__dirname, 'src') + "/index.html",
-                file: "index.html",
-            })
+            template: path.join(__dirname, 'src') + "/index.html",
+            file: "index.html",
+        })
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 9000
-      }
+    }
 }

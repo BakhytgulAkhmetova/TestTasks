@@ -73,21 +73,3 @@ $colors:
     height: 100%;
     width: 20%;
 }
-
-.elem_opacity {
-    background-color: nth($list: $colors , $n: 7);
-    position: absolute;
-    width: 80%;
-    height: 200px;
-    margin: 20px;
-    opacity: 0.8;
-}
-
-.elem_z-index {
-    background-color: blueviolet;
-    position: absolute;
-    width: 80%;
-    height: 200px;
-    margin: 20px;
-    z-index: 1;
-}
